@@ -16,7 +16,7 @@ const App = () => {
 		},
 	});
 
-	const handleFlow = ({ type }) => {};
+	const handleFlow = ({ type }) => console.log(data);
 
 	return (
 		<ChakraProvider theme={theme}>
