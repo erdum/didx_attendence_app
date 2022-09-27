@@ -17,7 +17,7 @@ const Card = () => {
 		if (user) {
 			doCheckIn(user);
 		} else {
-			signIn((loggedUser) => console.log(loggedUser));
+			signIn((loggedUser) => setUser(loggedUser));
 		}
 	};
 
@@ -25,7 +25,7 @@ const Card = () => {
 		if (user) {
 			doCheckOut(user);
 		} else {
-			signIn((loggedUser) => console.log(loggedUser));
+			signIn((loggedUser) => setUser(loggedUser));
 		}
 	};
 
