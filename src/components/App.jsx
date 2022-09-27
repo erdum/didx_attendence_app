@@ -8,6 +8,8 @@ import {
 } from "@chakra-ui/react";
 import Card from "./Card";
 
+import sheet from "../utils/sheet";
+
 const App = () => {
 	const theme = extendTheme({
 		fonts: {
@@ -16,7 +18,16 @@ const App = () => {
 		},
 	});
 
-	const handleFlow = ({ type }) => console.log(data);
+	const handleFlow = ({ type }) => {
+		const mySheet = sheet();
+
+		mySheet.init({
+			apiKey: import.meta.env.VITE_GOOGLE_SHEET_API_KEY,
+			sheetId: import.meta.env.VITE_GOOGLE_SHEET_ID,
+		});
+
+		mySheet.getFullSheet();
+	};
 
 	return (
 		<ChakraProvider theme={theme}>
