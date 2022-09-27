@@ -1,4 +1,5 @@
 import { ChakraProvider, extendTheme, Flex, Image, Heading, Text } from "@chakra-ui/react";
+import Card from "./Card";
 
 const App = () => {
 	const theme = extendTheme({
@@ -24,6 +25,7 @@ const App = () => {
 					Attendence Portal
 				</Heading>
 			</Flex>
+			<Card />
 			<Flex
 				w="100%"
 				h="16"
