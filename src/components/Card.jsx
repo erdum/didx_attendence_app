@@ -4,7 +4,7 @@ import UserBar from "./UserBar";
 import DateBar from "./DateBar";
 import DataBar from "./DataBar";
 
-const Card = ({ username, avatar, checkinTime, checkoutTime }) => {
+const Card = ({ username, avatar, checkinTime, checkoutTime, flowHandler }) => {
 	return (
 		<Box
 			w="92%"
@@ -27,7 +27,7 @@ const Card = ({ username, avatar, checkinTime, checkoutTime }) => {
 			<DataBar />
 			<Flex mt="auto" alignItems="center" justifyContent="space-around" py="1">
 				<Button
-					onClick={() => handleFlow({ type: "check-in" })}
+					onClick={() => flowHandler({ type: "check-in" })}
 					fontSize="sm"
 					bg="green.500"
 					color="white"
@@ -36,7 +36,7 @@ const Card = ({ username, avatar, checkinTime, checkoutTime }) => {
 					Check In <CheckIcon ml="2" />
 				</Button>
 				<Button
-					onClick={() => handleFlow({ type: "check-out" })}
+					onClick={() => flowHandler({ type: "check-out" })}
 					fontSize="sm"
 					bg="red.500"
 					color="white"
