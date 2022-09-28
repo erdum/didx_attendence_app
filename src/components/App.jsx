@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 import {
 	ChakraProvider,
 	extendTheme,
@@ -8,25 +10,70 @@ import {
 } from "@chakra-ui/react";
 import Card from "./Card";
 
-import sheet from "../utils/sheet";
+import { autoSignIn, signIn } from "../utils/auth";
+import Sheet from "../utils/sheet";
 
 const App = () => {
+	const [user, setUser] = useState(null);
+	const [times, setTimes] = useState({
+		in: null,
+		out: null,
+	});
 	const theme = extendTheme({
 		fonts: {
 			heading: `Quicksand`,
 			body: `Quicksand`,
 		},
 	});
+	const attendenceSheet = Sheet();
+	attendenceSheet.init({
+		apiKey: import.meta.env.VITE_GOOGLE_SHEET_API_KEY,
+		sheetId: import.meta.env.VITE_GOOGLE_SHEET_ID,
+		sheetName: "sheet1",
+	});
+
+	useEffect(() => {
+		autoSignIn((user) => {
+			if (user) {
+				setUser(user);
+				attendenceSheet.getRow("UID", user.uid, (row) => {
+					if (row) {
+						setTimes({
+							in: row.check_in_at,
+							out: row.check_out_at,
+						});
+					}
+				});
+			}
+		});
+	}, []);
 
 	const handleFlow = ({ type }) => {
-		const mySheet = sheet();
+		if (!user) {
+			signIn((user) => setUser(user));
+			return;
+		}
 
-		mySheet.init({
-			apiKey: import.meta.env.VITE_GOOGLE_SHEET_API_KEY,
-			sheetId: import.meta.env.VITE_GOOGLE_SHEET_ID,
-		});
-
-		mySheet.getFullSheet();
+		if (type === "check-in" && !times?.in) {
+			const date = new Date();
+			const checkinTime = date.toLocaleTimeString("default", {
+				hour: "numeric",
+				minute: "numeric",
+			});
+			const checkinDate = date.toLocaleString("default", {
+				day: "numeric",
+				month: "numeric",
+				year: "numeric",
+			});
+			setTimes((prevState) => ({ in: checkinTime }));
+			attendenceSheet.addRow({
+				UID: user.uid,
+				Name: user.displayName,
+				Email: user.email,
+				Date: checkinDate,
+				check_in_at: checkinTime,
+			});
+		}
 	};
 
 	return (
@@ -51,7 +98,13 @@ const App = () => {
 					Attendence Portal
 				</Heading>
 			</Flex>
-			<Card flowHandler={handleFlow} />
+			<Card
+				flowHandler={handleFlow}
+				username={user?.displayName}
+				avatar={user?.photoURL}
+				checkinTime={times?.in}
+				checkoutTime={times?.out}
+			/>
 			<Flex
 				w="100%"
 				h="16"
