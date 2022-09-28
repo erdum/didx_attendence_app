@@ -36,7 +36,7 @@ const Sheet = () => {
 
 	const addRow = async (body, callback) => {
 		const result = await postReq(body, data.url);
-		callback(result);
+		callback && callback(result);
 	};
 
 	const getAllRows = async (callback) => {
@@ -46,13 +46,17 @@ const Sheet = () => {
 
 	const getRow = async (column, value, callback) => {
 		let rows;
-		await getAllRows((data) => rows = data);
+		await getAllRows((data) => (rows = data));
 
-		const match = rows.find(elem => {
-			return elem && elem.hasOwnProperty(column) && Object.values(elem).includes(value);
+		const match = rows.find((elem) => {
+			return (
+				elem &&
+				elem.hasOwnProperty(column) &&
+				Object.values(elem).includes(value)
+			);
 		});
 
-		callback(match ?? null);
+		callback && callback(match ?? null);
 	};
 
 	return {
