@@ -24,7 +24,7 @@ const Card = ({ username, avatar, checkinTime, checkoutTime, flowHandler }) => {
 		>
 			<UserBar avatar={avatar} username={username} />
 			<DateBar />
-			<DataBar />
+			<DataBar checkinTime={checkinTime} checkoutTime={checkoutTime} />
 			<Flex mt="auto" alignItems="center" justifyContent="space-around" py="1">
 				<Button
 					onClick={() => flowHandler({ type: "check-in" })}
