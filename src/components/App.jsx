@@ -74,6 +74,24 @@ const App = () => {
 				check_in_at: checkinTime,
 			});
 		}
+
+		if (type === "check-out" && !times?.out && times?.in) {
+			const date = new Date();
+			const checkoutTime = date.toLocaleTimeString("default", {
+				hour: "numeric",
+				minute: "numeric",
+			});
+			const checkoutDate = date.toLocaleString("default", {
+				day: "numeric",
+				month: "numeric",
+				year: "numeric",
+			});
+			setTimes((prevState) => ({ ...prevState, out: checkoutTime }));
+			attendenceSheet.updateRow({
+				check_out_at: checkoutTime,
+				check_out_date: checkoutDate,
+			});
+		}
 	};
 
 	return (
