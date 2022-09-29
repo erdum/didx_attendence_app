@@ -70,7 +70,7 @@ const App = () => {
 				UID: user.uid,
 				Name: user.displayName,
 				Email: user.email,
-				Date: checkinDate,
+				check_in_date: checkinDate,
 				check_in_at: checkinTime,
 			});
 		}
