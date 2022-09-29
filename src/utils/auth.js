@@ -1,5 +1,10 @@
 import app from "./firebase";
-import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
+import {
+	getAuth,
+	signInWithPopup,
+	GoogleAuthProvider,
+	onAuthStateChanged,
+} from "firebase/auth";
 
 const auth = getAuth();
 const provider = new GoogleAuthProvider();

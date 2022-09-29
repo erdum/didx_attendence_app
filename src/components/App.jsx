@@ -87,10 +87,14 @@ const App = () => {
 				year: "numeric",
 			});
 			setTimes((prevState) => ({ ...prevState, out: checkoutTime }));
-			attendenceSheet.updateRow({
-				check_out_at: checkoutTime,
-				check_out_date: checkoutDate,
-			}, "UID", user.uid);
+			attendenceSheet.updateRow(
+				{
+					check_out_at: checkoutTime,
+					check_out_date: checkoutDate,
+				},
+				"UID",
+				user.uid
+			);
 		}
 	};
 

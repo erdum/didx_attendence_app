@@ -76,7 +76,7 @@ const Sheet = () => {
 
 	const updateRow = async (body, column, value, callback) => {
 		let rowIndex;
-		await getRow(column, value, (data) => rowIndex = data.rowIndex);
+		await getRow(column, value, (data) => (rowIndex = data.rowIndex));
 		const result = await patchReq(body, data.url, rowIndex);
 		callback && callback(result);
 	};

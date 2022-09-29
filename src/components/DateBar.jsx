@@ -17,7 +17,10 @@ const DateBar = () => {
 				{date.toLocaleString("default", { month: "short" })}
 			</Text>
 			<Text ml="2" color="blackAlpha.800" fontSize="lg" fontWeight="semibold">
-				{date.toLocaleTimeString("default", {hour: 'numeric', minute:'numeric'})}
+				{date.toLocaleTimeString("default", {
+					hour: "numeric",
+					minute: "numeric",
+				})}
 			</Text>
 		</Flex>
 	);
