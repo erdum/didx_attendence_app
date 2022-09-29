@@ -10,6 +10,7 @@ const Card = ({ username, avatar, checkinTime, checkoutTime, flowHandler }) => {
 			w="92%"
 			h="70vh"
 			maxH="420px"
+			maxW="320px"
 			boxShadow="base"
 			position="fixed"
 			top="50%"
