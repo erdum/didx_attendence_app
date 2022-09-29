@@ -90,7 +90,7 @@ const App = () => {
 			attendenceSheet.updateRow({
 				check_out_at: checkoutTime,
 				check_out_date: checkoutDate,
-			});
+			}, "UID", user.uid);
 		}
 	};
 
