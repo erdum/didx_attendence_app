@@ -59,11 +59,17 @@ const Sheet = () => {
 		callback && callback(match ?? null);
 	};
 
+	const updateRow = async (body, callback) => {
+		const result = await patchReq(body, data.url);
+		callback && callback(result);
+	};
+
 	return {
 		init,
 		addRow,
 		getAllRows,
 		getRow,
+		updateRow,
 	};
 };
 
