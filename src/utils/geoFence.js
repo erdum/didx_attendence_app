@@ -1,7 +1,7 @@
 const GeoFence = () => {
 	const data = {};
 
-	const getLocation = async (callback) => {
+	const getLocation = (callback) => {
 		navigator.geolocation.getCurrentPosition((position) => {
 			data.lat = position.coords.latitude;
 			data.long = position.coords.longitude;
@@ -13,19 +13,19 @@ const GeoFence = () => {
 		});
 	};
 
-	const setFecnceSquare = (min, max) => {
-		data.leftTopLat = min.lat;
-		data.leftTopLong = min.long;
-		data.rightBottomLat = max.lat;
-		data.rightBottomLong = max.long;
+	const setFecnceSquare = (ltlat, ltlong, brlat, brlong) => {
+		data.leftTopLat = ltlat;
+		data.leftTopLong = ltlong;
+		data.bottomRightLat = brlat;
+		data.bottomRightLong = brlong;
 	};
 
 	const isUserInFence = () => {
 		return (
-			data.lat > data.leftTopLat &&
-			data.lat < data.rightBottomLat &&
-			data.long > data.leftTopLong &&
-			data.long < data.rightBottomLong
+			data.lat >= data.leftTopLat &&
+			data.long >= data.leftTopLong &&
+			data.lat <= data.bottomRightLat &&
+			data.long <= bottomRightLong
 		);
 	};
 
