@@ -12,6 +12,7 @@ import Card from "./Card";
 
 import { autoSignIn, signIn } from "../utils/auth";
 import Sheet from "../utils/sheet";
+import GeoFence from "../utils/geoFence";
 
 const App = () => {
 	const [user, setUser] = useState(null);
@@ -48,11 +49,17 @@ const App = () => {
 		});
 	}, []);
 
-	const handleFlow = ({ type }) => {
+	const handleFlow = async ({ type }) => {
 		if (!user) {
 			signIn((user) => setUser(user));
 			return;
 		}
+
+		const loc = GeoFence();
+		loc.setFecnceSquare(24.8772, 67.067, 24.8779, 67.072);
+		loc.getLocation((data) => {
+			loc.isUserInFence() && console.log("yes");
+		});
 
 		if (type === "check-in" && !times?.in) {
 			const date = new Date();
