@@ -30,8 +30,8 @@ const GeoFence = () => {
 		const dlong = currentLong - centerLong;
 		let c = Math.pow(Math.sin(dlat / 2), 2) + Math.cos(centerLat) * Math.cos(currentLat) * Math.pow(Math.sin(dlong / 2), 2);
 		c = 2 * Math.asin(Math.sqrt(c));
-		console.log(6731 * c);
-		return true;
+		c = 6371 * c;
+		return c <= data.geoFenceCircleRadius;
 	};
 
 	return {
