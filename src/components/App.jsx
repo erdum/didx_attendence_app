@@ -58,51 +58,50 @@ const App = () => {
 		const loc = GeoFence();
 		loc.setGeoFenceCircle(24.877639668696567, 67.07011875156365, 100);
 		loc.getLocation((data) => {
-			alert(data);
-			// if (loc.isUserInFence()) {
-				// if (type === "check-in" && !times?.in) {
-				// 	const date = new Date();
-				// 	const checkinTime = date.toLocaleTimeString("default", {
-				// 		hour: "numeric",
-				// 		minute: "numeric",
-				// 	});
-				// 	const checkinDate = date.toLocaleString("default", {
-				// 		day: "numeric",
-				// 		month: "numeric",
-				// 		year: "numeric",
-				// 	});
-				// 	setTimes((prevState) => ({ in: checkinTime }));
-				// 	attendenceSheet.addRow({
-				// 		UID: user.uid,
-				// 		Name: user.displayName,
-				// 		Email: user.email,
-				// 		check_in_date: checkinDate,
-				// 		check_in_at: checkinTime,
-				// 	});
-				// }
+			if (loc.isUserInFence()) {
+				if (type === "check-in" && !times?.in) {
+					const date = new Date();
+					const checkinTime = date.toLocaleTimeString("default", {
+						hour: "numeric",
+						minute: "numeric",
+					});
+					const checkinDate = date.toLocaleString("default", {
+						day: "numeric",
+						month: "numeric",
+						year: "numeric",
+					});
+					setTimes((prevState) => ({ in: checkinTime }));
+					attendenceSheet.addRow({
+						UID: user.uid,
+						Name: user.displayName,
+						Email: user.email,
+						check_in_date: checkinDate,
+						check_in_at: checkinTime,
+					});
+				}
 
-				// if (type === "check-out" && !times?.out && times?.in) {
-				// 	const date = new Date();
-				// 	const checkoutTime = date.toLocaleTimeString("default", {
-				// 		hour: "numeric",
-				// 		minute: "numeric",
-				// 	});
-				// 	const checkoutDate = date.toLocaleString("default", {
-				// 		day: "numeric",
-				// 		month: "numeric",
-				// 		year: "numeric",
-				// 	});
-				// 	setTimes((prevState) => ({ ...prevState, out: checkoutTime }));
-				// 	attendenceSheet.updateRow(
-				// 		{
-				// 			check_out_at: checkoutTime,
-				// 			check_out_date: checkoutDate,
-				// 		},
-				// 		"UID",
-				// 		user.uid
-				// 	);
-				// }
-			// }
+				if (type === "check-out" && !times?.out && times?.in) {
+					const date = new Date();
+					const checkoutTime = date.toLocaleTimeString("default", {
+						hour: "numeric",
+						minute: "numeric",
+					});
+					const checkoutDate = date.toLocaleString("default", {
+						day: "numeric",
+						month: "numeric",
+						year: "numeric",
+					});
+					setTimes((prevState) => ({ ...prevState, out: checkoutTime }));
+					attendenceSheet.updateRow(
+						{
+							check_out_at: checkoutTime,
+							check_out_date: checkoutDate,
+						},
+						"UID",
+						user.uid
+					);
+				}
+			}
 		});
 	};
 
