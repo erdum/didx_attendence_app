@@ -1,13 +1,12 @@
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCoTKjhMVzbEj7S7aAD_uwhRRpr52gZ8c0",
-  authDomain: "didx-attendance-portal.firebaseapp.com",
-  projectId: "didx-attendance-portal",
-  storageBucket: "didx-attendance-portal.appspot.com",
-  messagingSenderId: "959420409278",
-  appId: "1:959420409278:web:0e7255ac052481fd2ec5ef",
-  measurementId: "G-QMMLQF5YQG"
+  apiKey: "AIzaSyBYz8ZL0ef_zm23d0JUeJcyFkRytMVyhH0",
+  authDomain: "didx-attendance-portal-fa701.firebaseapp.com",
+  projectId: "didx-attendance-portal-fa701",
+  storageBucket: "didx-attendance-portal-fa701.appspot.com",
+  messagingSenderId: "1031404753998",
+  appId: "1:1031404753998:web:416e888f1ec08dcfcadf1f"
 };
 const app = initializeApp(firebaseConfig);
 
