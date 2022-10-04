@@ -13,25 +13,30 @@ const GeoFence = () => {
 		});
 	};
 
-	const setFecnceSquare = (ltlat, ltlong, brlat, brlong) => {
-		data.leftTopLat = ltlat;
-		data.leftTopLong = ltlong;
-		data.bottomRightLat = brlat;
-		data.bottomRightLong = brlong;
+	const setGeoFenceCircle = (lat, long, radius) => {
+		data.geoFenceCircleLat = lat;
+		data.geoFenceCircleLong = long;
+		data.geoFenceCircleRadius = radius;
 	};
 
 	const isUserInFence = () => {
-		return (
-			data.lat >= data.leftTopLat &&
-			data.long >= data.leftTopLong &&
-			data.lat <= data.bottomRightLat &&
-			data.long <= bottomRightLong
-		);
+		const centerLat = data.geoFenceCircleLat / (180 / Math.PI);
+		const centerLong = data.geoFenceCircleLong / (180 / Math.PI);
+		const currentLat = data.lat / (180 / Math.PI);
+		const currentLong = data.long / (180 / Math.PI);
+
+		// Haversine Formula
+		const dlat = currentLat - centerLat;
+		const dlong = currentLong - centerLong;
+		let c = Math.pow(Math.sin(dlat / 2), 2) + Math.cos(centerLat) * Math.cos(currentLat) * Math.pow(Math.sin(dlong / 2), 2);
+		c = 2 * Math.asin(Math.sqrt(c));
+		console.log(6731 * c);
+		return true;
 	};
 
 	return {
 		getLocation,
-		setFecnceSquare,
+		setGeoFenceCircle,
 		isUserInFence,
 	};
 };
