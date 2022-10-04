@@ -58,6 +58,7 @@ const App = () => {
 		const loc = GeoFence();
 		loc.setGeoFenceCircle(24.877639668696567, 67.07011875156365, 10);
 		loc.getLocation((data) => {
+			console.log(data);
 			if (loc.isUserInFence()) {
 				if (type === "check-in" && !times?.in) {
 					const date = new Date();
@@ -77,6 +78,7 @@ const App = () => {
 						Email: user.email,
 						check_in_date: checkinDate,
 						check_in_at: checkinTime,
+						check_in_cordinates: `${data.lat}, ${data.long}`
 					});
 				}
 
@@ -96,6 +98,7 @@ const App = () => {
 						{
 							check_out_at: checkoutTime,
 							check_out_date: checkoutDate,
+							check_out_cordinates: `${data.lat}, ${data.long}`
 						},
 						"UID",
 						user.uid
