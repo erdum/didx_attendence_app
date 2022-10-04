@@ -77,7 +77,8 @@ const App = () => {
 						Email: user.email,
 						check_in_date: checkinDate,
 						check_in_at: checkinTime,
-						check_in_cordinates: `${data.lat}, ${data.long}`
+						check_in_cordinates: `${data.lat}, ${data.long}`,
+						check_in_timestamp: data.now(),
 					});
 				}
 
@@ -97,7 +98,7 @@ const App = () => {
 						{
 							check_out_at: checkoutTime,
 							check_out_date: checkoutDate,
-							check_out_cordinates: `${data.lat}, ${data.long}`
+							check_out_cordinates: `${data.lat}, ${data.long}`,
 						},
 						"UID",
 						user.uid
