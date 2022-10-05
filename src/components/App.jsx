@@ -57,55 +57,58 @@ const App = () => {
 
 		const loc = GeoFence();
 		loc.setGeoFenceCircle(24.877639668696567, 67.07011875156365, 0.6);
-		loc.getLocation((data) => {
-			if (loc.isUserInFence()) {
-				if (type === "check-in" && !times?.in) {
-					const date = new Date();
-					const checkinTime = date.toLocaleTimeString("default", {
-						hour: "numeric",
-						minute: "numeric",
-					});
-					const checkinDate = date.toLocaleString("default", {
-						day: "numeric",
-						month: "numeric",
-						year: "numeric",
-					});
-					setTimes((prevState) => ({ in: checkinTime }));
-					attendenceSheet.addRow({
-						UID: user.uid,
-						Name: user.displayName,
-						Email: user.email,
-						check_in_date: checkinDate,
-						check_in_at: checkinTime,
-						check_in_cordinates: `${data.lat}, ${data.long}`,
-						check_in_timestamp: data.now(),
-					});
-				}
+		loc.getLocation(
+			(data) => {
+				if (loc.isUserInFence()) {
+					if (type === "check-in" && !times?.in) {
+						const date = new Date();
+						const checkinTime = date.toLocaleTimeString("default", {
+							hour: "numeric",
+							minute: "numeric",
+						});
+						const checkinDate = date.toLocaleString("default", {
+							day: "numeric",
+							month: "numeric",
+							year: "numeric",
+						});
+						setTimes((prevState) => ({ in: checkinTime }));
+						attendenceSheet.addRow({
+							UID: user.uid,
+							Name: user.displayName,
+							Email: user.email,
+							check_in_date: checkinDate,
+							check_in_at: checkinTime,
+							check_in_cordinates: `${data.lat}, ${data.long}`,
+							check_in_timestamp: data.now(),
+						});
+					}
 
-				if (type === "check-out" && !times?.out && times?.in) {
-					const date = new Date();
-					const checkoutTime = date.toLocaleTimeString("default", {
-						hour: "numeric",
-						minute: "numeric",
-					});
-					const checkoutDate = date.toLocaleString("default", {
-						day: "numeric",
-						month: "numeric",
-						year: "numeric",
-					});
-					setTimes((prevState) => ({ ...prevState, out: checkoutTime }));
-					attendenceSheet.updateRow(
-						{
-							check_out_at: checkoutTime,
-							check_out_date: checkoutDate,
-							check_out_cordinates: `${data.lat}, ${data.long}`,
-						},
-						"UID",
-						user.uid
-					);
+					if (type === "check-out" && !times?.out && times?.in) {
+						const date = new Date();
+						const checkoutTime = date.toLocaleTimeString("default", {
+							hour: "numeric",
+							minute: "numeric",
+						});
+						const checkoutDate = date.toLocaleString("default", {
+							day: "numeric",
+							month: "numeric",
+							year: "numeric",
+						});
+						setTimes((prevState) => ({ ...prevState, out: checkoutTime }));
+						attendenceSheet.updateRow(
+							{
+								check_out_at: checkoutTime,
+								check_out_date: checkoutDate,
+								check_out_cordinates: `${data.lat}, ${data.long}`,
+							},
+							"UID",
+							user.uid
+						);
+					}
 				}
-			}
-		}, () => alert("Unable to get your location!"));
+			},
+			() => alert("Unable to get your location!")
+		);
 	};
 
 	return (
