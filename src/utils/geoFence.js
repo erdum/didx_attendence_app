@@ -1,7 +1,7 @@
 const GeoFence = () => {
 	const data = {};
 
-	const getLocation = (callback) => {
+	const getLocation = (callback, errHandler) => {
 		navigator.geolocation.getCurrentPosition((position) => {
 			data.lat = position.coords.latitude;
 			data.long = position.coords.longitude;
@@ -10,6 +10,9 @@ const GeoFence = () => {
 					lat: position.coords.latitude,
 					long: position.coords.longitude,
 				});
+		}, (err) => {
+			console.log(err);
+			errHandler && errHandler(err);
 		});
 	};
 
