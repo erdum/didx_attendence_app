@@ -96,7 +96,6 @@ const App = () => {
 							month: "numeric",
 							year: "numeric",
 						});
-						setTimes((prevState) => ({ ...prevState, out: checkoutTime }));
 						attendenceSheet.updateRow(
 							{
 								check_out_at: checkoutTime,
@@ -104,7 +103,9 @@ const App = () => {
 								check_out_cordinates: `${data.lat}, ${data.long}`,
 							},
 							"UID",
-							user.uid
+							user.uid,
+							() =>
+								setTimes((prevState) => ({ ...prevState, out: checkoutTime }))
 						);
 					}
 				}
