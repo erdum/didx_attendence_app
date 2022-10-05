@@ -56,7 +56,7 @@ const App = () => {
 		}
 
 		const loc = GeoFence();
-		loc.setGeoFenceCircle(24.877639668696567, 67.07011875156365, 10);
+		loc.setGeoFenceCircle(24.877639668696567, 67.07011875156365, 0.6);
 		loc.getLocation(
 			(data) => {
 				if (loc.isUserInFence()) {
