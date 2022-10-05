@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Text, SkeletonText } from "@chakra-ui/react";
 
 const DataBar = ({ checkinTime, checkoutTime }) => {
 	return (
@@ -14,9 +14,13 @@ const DataBar = ({ checkinTime, checkoutTime }) => {
 				<Text ml="2" color="blackAlpha.800" fontWeight="medium">
 					Today checked in at:
 				</Text>
-				<Text ml="2" color="blackAlpha.800" fontWeight="medium">
-					{checkinTime ?? "----"}
-				</Text>
+				{checkinTime ? (
+					<Text ml="2" color="blackAlpha.800" fontWeight="medium">
+						{checkinTime}
+					</Text>
+				) : (
+					<SkeletonText noOfLines={1} width="30%" />
+				)}
 			</Flex>
 			<Flex
 				w="100%"
@@ -28,9 +32,13 @@ const DataBar = ({ checkinTime, checkoutTime }) => {
 				<Text ml="2" color="blackAlpha.800" fontWeight="medium">
 					Today checked out at:
 				</Text>
-				<Text ml="2" color="blackAlpha.800" fontWeight="medium">
-					{checkoutTime ?? "----"}
-				</Text>
+				{checkoutTime ? (
+					<Text ml="2" color="blackAlpha.800" fontWeight="medium">
+						{checkoutTime}
+					</Text>
+				) : (
+					<SkeletonText noOfLines={1} width="30%" />
+				)}
 			</Flex>
 		</>
 	);
