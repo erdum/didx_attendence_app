@@ -40,10 +40,15 @@ const App = () => {
 				setUser(user);
 				attendenceSheet.getAllRows((rows) => {
 					const lastEntry = rows.filter((row) => row["UID"] == user.uid).at(-1);
-					if ((Date.now() - lastEntry.check_in_timestamp) < 82800000) {
+					if (lastEntry && (Date.now() - lastEntry.check_in_timestamp) < 82800000) {
 						setTimes({
 							in: lastEntry.check_in_at,
 							out: lastEntry.check_out_at,
+						});
+					} else {
+						setTimes({
+							in: "----",
+							out: "----",
 						});
 					}
 				});
