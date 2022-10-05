@@ -71,16 +71,18 @@ const App = () => {
 							month: "numeric",
 							year: "numeric",
 						});
-						setTimes((prevState) => ({ in: checkinTime }));
-						attendenceSheet.addRow({
-							UID: user.uid,
-							Name: user.displayName,
-							Email: user.email,
-							check_in_date: checkinDate,
-							check_in_at: checkinTime,
-							check_in_cordinates: `${data.lat}, ${data.long}`,
-							check_in_timestamp: data.now(),
-						});
+						attendenceSheet.addRow(
+							{
+								UID: user.uid,
+								Name: user.displayName,
+								Email: user.email,
+								check_in_date: checkinDate,
+								check_in_at: checkinTime,
+								check_in_cordinates: `${data.lat}, ${data.long}`,
+								check_in_timestamp: data.now(),
+							},
+							() => setTimes((prevState) => ({ in: checkinTime }))
+						);
 					}
 
 					if (type === "check-out" && !times?.out && times?.in) {
