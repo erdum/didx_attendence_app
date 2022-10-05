@@ -8,27 +8,35 @@ const Sheet = () => {
 	};
 
 	const getReq = async (url) => {
-		const req = await fetch(url, {
-			headers: {
-				Authorization: `Bearer ${data.apiKey}`,
-				"X-Spreadsheet-Id": data.sheetId,
-			},
-		});
+		try {
+			const req = await fetch(url, {
+				headers: {
+					Authorization: `Bearer ${data.apiKey}`,
+					"X-Spreadsheet-Id": data.sheetId,
+				},
+			});
+		} catch (err) {
+			console.log(err);
+		}
 
 		const res = await req.json();
 		return res;
 	};
 
 	const postReq = async (body, url) => {
-		const req = await fetch(url, {
-			method: "POST",
-			headers: {
-				Authorization: `Bearer ${data.apiKey}`,
-				"X-Spreadsheet-Id": data.sheetId,
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(body),
-		});
+		try {
+			const req = await fetch(url, {
+				method: "POST",
+				headers: {
+					Authorization: `Bearer ${data.apiKey}`,
+					"X-Spreadsheet-Id": data.sheetId,
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(body),
+			});
+		} catch (err) {
+			console.log(err);
+		}
 
 		const res = await req.json();
 		return res;
