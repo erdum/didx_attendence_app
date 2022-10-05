@@ -43,18 +43,22 @@ const Sheet = () => {
 	};
 
 	const patchReq = async (body, url, row) => {
-		const req = await fetch(`${url}/${row}`, {
-			method: "PATCH",
-			headers: {
-				Authorization: `Bearer ${data.apiKey}`,
-				"X-Spreadsheet-Id": data.sheetId,
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(body),
-		});
+		try {
+			const req = await fetch(`${url}/${row}`, {
+				method: "PATCH",
+				headers: {
+					Authorization: `Bearer ${data.apiKey}`,
+					"X-Spreadsheet-Id": data.sheetId,
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(body),
+			});
 
-		const res = await req.json();
-		return res;
+			const res = await req.json();
+			return res;
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	const addRow = async (body, callback) => {
