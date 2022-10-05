@@ -38,12 +38,12 @@ const App = () => {
 		autoSignIn((user) => {
 			if (user) {
 				setUser(user);
-				attendenceSheet.getRow("UID", user.uid, (row) => {
-					if (row) {
+				attendenceSheet.getAllRows((rows) => {
+					const lastEntry = rows.filter((row) => row["UID"] == user.uid).at(-1);
+					if ((Date.now() - lastEntry.check_in_timestamp) < 82800000) {
 						setTimes({
-							in: row.check_in_at,
-							out: row.check_out_at,
-							inTimestamp: row.check_in_timestamp,
+							in: lastEntry.check_in_at,
+							out: lastEntry.check_out_at,
 						});
 					}
 				});
