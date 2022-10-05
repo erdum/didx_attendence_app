@@ -19,6 +19,7 @@ const App = () => {
 	const [times, setTimes] = useState({
 		in: null,
 		out: null,
+		inTimestamp: null,
 	});
 	const theme = extendTheme({
 		fonts: {
@@ -42,6 +43,7 @@ const App = () => {
 						setTimes({
 							in: row.check_in_at,
 							out: row.check_out_at,
+							inTimestamp: row.check_in_timestamp,
 						});
 					}
 				});
