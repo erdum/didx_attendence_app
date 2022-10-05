@@ -15,12 +15,12 @@ const Sheet = () => {
 					"X-Spreadsheet-Id": data.sheetId,
 				},
 			});
+
+			const res = await req.json();
+			return res;
 		} catch (err) {
 			console.log(err);
 		}
-
-		const res = await req.json();
-		return res;
 	};
 
 	const postReq = async (body, url) => {
@@ -34,12 +34,12 @@ const Sheet = () => {
 				},
 				body: JSON.stringify(body),
 			});
+
+			const res = await req.json();
+			return res;
 		} catch (err) {
 			console.log(err);
 		}
-
-		const res = await req.json();
-		return res;
 	};
 
 	const patchReq = async (body, url, row) => {
