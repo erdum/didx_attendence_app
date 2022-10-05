@@ -105,7 +105,7 @@ const App = () => {
 					);
 				}
 			}
-		});
+		}, () => alert("Unable to get your location!"));
 	};
 
 	return (
