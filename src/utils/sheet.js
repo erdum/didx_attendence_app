@@ -93,12 +93,26 @@ const Sheet = () => {
 		callback && callback(result);
 	};
 
+	const getFilteredRows = async (fields, callback) => {
+		let rows;
+		await getAllRows((data) => (rows = data));
+
+		const matchRows = rows.filter((elem) => {
+			const keys = Object.keys(elem);
+			const matchedFields = keys.filter((key) => elem[key] == fields[key]);
+			return matchedFields.length == Object.keys(fields).length;
+		});
+
+		callback && callback(matchRows ?? null);
+	};
+
 	return {
 		init,
 		addRow,
 		getAllRows,
 		getRow,
 		updateRow,
+		getFilteredRows,
 	};
 };
 
