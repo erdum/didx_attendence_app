@@ -110,6 +110,8 @@ const App = () => {
 								setTimes((prevState) => ({ ...prevState, out: checkoutTime }))
 						);
 					}
+				} else {
+					alert("You are not at the DIDX location!");
 				}
 			},
 			() => alert("Unable to get your location!")
