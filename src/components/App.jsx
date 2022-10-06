@@ -43,6 +43,7 @@ const App = () => {
 		autoSignIn((user) => {
 			if (user) {
 				setUser(user);
+				setLoaders((prevState) => ({ user: false }));
 				attendenceSheet.getAllRows((rows) => {
 					const lastEntry = rows.filter((row) => row["UID"] == user.uid).at(-1);
 					if (lastEntry && (Date.now() - lastEntry.check_in_timestamp) < 82800000) {
@@ -52,6 +53,8 @@ const App = () => {
 						});
 					}
 				});
+			} else {
+				setUser(user);
 			}
 		});
 	}, []);
