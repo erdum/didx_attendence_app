@@ -151,6 +151,9 @@ const App = () => {
 				avatar={user?.photoURL}
 				checkinTime={times?.in}
 				checkoutTime={times?.out}
+				userLoader={loaders.user}
+				checkinLoader={loaders.checkin}
+				checkoutLoader={loaders.checkout}
 			/>
 			<Flex
 				w="100%"
