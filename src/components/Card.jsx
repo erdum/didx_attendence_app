@@ -4,7 +4,7 @@ import UserBar from "./UserBar";
 import DateBar from "./DateBar";
 import DataBar from "./DataBar";
 
-const Card = ({ username, avatar, checkinTime, checkoutTime, flowHandler }) => {
+const Card = ({ username, avatar, checkinTime, checkoutTime, flowHandler, userLoader, checkinLoader, checkoutLoader }) => {
 	return (
 		<Box
 			w="92%"
