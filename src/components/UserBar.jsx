@@ -1,4 +1,10 @@
-import { Flex, Avatar, Text, SkeletonText } from "@chakra-ui/react";
+import {
+	Flex,
+	Avatar,
+	Text,
+	SkeletonText,
+	SkeletonCircle,
+} from "@chakra-ui/react";
 
 const UserBar = ({ avatar, username, loader }) => {
 	return (
@@ -10,7 +16,11 @@ const UserBar = ({ avatar, username, loader }) => {
 			justifyContent="start"
 			alignItems="center"
 		>
-			<Avatar referrerPolicy="no-referrer" src={avatar} />
+			{loader ? (
+				<SkeletonCircle size="10" />
+			) : (
+				<Avatar referrerPolicy="no-referrer" src={avatar} />
+			)}
 			{!loader && (
 				<Text ml="2" fontWeight="semibold">
 					{username}
