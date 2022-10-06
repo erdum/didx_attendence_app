@@ -21,6 +21,11 @@ const App = () => {
 		out: null,
 		inTimestamp: null,
 	});
+	const [loaders, setLoaders] = useState({
+		user: true,
+		checkin: true,
+		checkout: true,
+	});
 	const theme = extendTheme({
 		fonts: {
 			heading: `Quicksand`,
