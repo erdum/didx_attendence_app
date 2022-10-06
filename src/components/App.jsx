@@ -54,7 +54,7 @@ const App = () => {
 					}
 				});
 			} else {
-				setUser(user);
+				setLoaders((prevState) => ({ user: false }));
 			}
 		});
 	}, []);
