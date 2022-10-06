@@ -1,6 +1,6 @@
-import { Flex, Avatar, Text } from "@chakra-ui/react";
+import { Flex, Avatar, Text, SkeletonText } from "@chakra-ui/react";
 
-const UserBar = ({ avatar, username }) => {
+const UserBar = ({ avatar, username, loader }) => {
 	return (
 		<Flex
 			w="100%"
@@ -11,9 +11,12 @@ const UserBar = ({ avatar, username }) => {
 			alignItems="center"
 		>
 			<Avatar referrerPolicy="no-referrer" src={avatar} />
-			<Text ml="2" fontWeight="semibold">
-				{username ?? "Please click any button to login"}
-			</Text>
+			{!loader && (
+				<Text ml="2" fontWeight="semibold">
+					{username}
+				</Text>
+			)}
+			{loader && <SkeletonText noOfLines={2} width="60%" ml="4" />}
 		</Flex>
 	);
 };
