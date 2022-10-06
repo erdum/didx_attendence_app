@@ -14,7 +14,7 @@ const DataBar = ({ checkinTime, checkoutTime, checkinLoader, checkoutLoader }) =
 				<Text ml="2" color="blackAlpha.800" fontWeight="medium">
 					Today checked in at:
 				</Text>
-				{checkinLoader ? (
+				{!checkinLoader ? (
 					<Text ml="2" color="blackAlpha.800" fontWeight="medium">
 						{checkinTime}
 					</Text>
@@ -32,7 +32,7 @@ const DataBar = ({ checkinTime, checkoutTime, checkinLoader, checkoutLoader }) =
 				<Text ml="2" color="blackAlpha.800" fontWeight="medium">
 					Today checked out at:
 				</Text>
-				{checkoutLoader ? (
+				{!checkoutLoader ? (
 					<Text ml="2" color="blackAlpha.800" fontWeight="medium">
 						{checkoutTime}
 					</Text>
