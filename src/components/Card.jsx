@@ -28,6 +28,7 @@ const Card = ({ username, avatar, checkinTime, checkoutTime, flowHandler, userLo
 			<DataBar checkinTime={checkinTime} checkoutTime={checkoutTime} checkinLoader={checkinLoader} checkoutLoader={checkoutLoader} />
 			<Flex mt="auto" alignItems="center" justifyContent="space-around" py="1">
 				<Button
+					isLoading={checkinLoader}
 					onClick={() => flowHandler({ type: "check-in" })}
 					fontSize="sm"
 					bg="green.500"
@@ -43,6 +44,7 @@ const Card = ({ username, avatar, checkinTime, checkoutTime, flowHandler, userLo
 					Check In <CheckIcon ml="2" />
 				</Button>
 				<Button
+					isLoading={checkoutLoader}
 					onClick={() => flowHandler({ type: "check-out" })}
 					fontSize="sm"
 					bg="red.500"
