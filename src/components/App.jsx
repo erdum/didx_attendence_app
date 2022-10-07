@@ -103,7 +103,7 @@ const App = () => {
 						);
 					}
 
-					if (type === "check-out" && times?.out === "----" && times?.in != "----") {
+					if (type === "check-out" && times?.in != "----") {
 						const date = new Date();
 						const checkoutTime = date.toLocaleTimeString("default", {
 							hour: "numeric",
