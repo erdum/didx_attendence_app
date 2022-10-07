@@ -33,6 +33,12 @@ const Card = ({ username, avatar, checkinTime, checkoutTime, flowHandler, userLo
 					bg="green.500"
 					color="white"
 					px="5"
+					_active={{
+						background: "green.500"
+					}}
+					_hover={{
+						background: "green.500"
+					}}
 				>
 					Check In <CheckIcon ml="2" />
 				</Button>
@@ -41,6 +47,12 @@ const Card = ({ username, avatar, checkinTime, checkoutTime, flowHandler, userLo
 					fontSize="sm"
 					bg="red.500"
 					color="white"
+					_active={{
+						background: "green.500"
+					}}
+					_hover={{
+						background: "green.500"
+					}}
 				>
 					Check out <ArrowForwardIcon ml="2" />
 				</Button>
