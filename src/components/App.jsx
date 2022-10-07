@@ -161,7 +161,7 @@ const App = () => {
 			</Flex>
 			<Card
 				flowHandler={handleFlow}
-				username={user?.displayName}
+				username={user?.displayName ?? "Click any button to login"}
 				avatar={user?.photoURL}
 				checkinTime={times?.in}
 				checkoutTime={times?.out}
