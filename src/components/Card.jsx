@@ -48,10 +48,10 @@ const Card = ({ username, avatar, checkinTime, checkoutTime, flowHandler, userLo
 					bg="red.500"
 					color="white"
 					_active={{
-						background: "green.500"
+						background: "red.500"
 					}}
 					_hover={{
-						background: "green.500"
+						background: "red.500"
 					}}
 				>
 					Check out <ArrowForwardIcon ml="2" />
