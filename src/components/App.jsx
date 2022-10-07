@@ -51,10 +51,14 @@ const App = () => {
 							in: lastEntry.check_in_at,
 							out: lastEntry.check_out_at,
 						});
+					} else {
+						setLoaders({ checkin: false, checkout: false, user: false });
+						setTimes({ in: "----", out: "----", inTimestamp: null });
 					}
 				});
 			} else {
-				setLoaders((prevState) => ({ ...prevState, user: false }));
+				setLoaders((prevState) => ({ checkin: false, checkout: false, user: false }));
+				setTimes({ in: "----", out: "----", inTimestamp: null });
 			}
 		});
 	}, []);
