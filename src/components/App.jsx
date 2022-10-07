@@ -69,11 +69,11 @@ const App = () => {
 		}
 
 		const loc = GeoFence();
-		loc.setGeoFenceCircle(24.877639668696567, 67.07011875156365, 0.6);
+		loc.setGeoFenceCircle(24.877639668696567, 67.07011875156365, 10);
 		loc.getLocation(
 			(data) => {
 				if (loc.isUserInFence()) {
-					if (type === "check-in" && !times?.in) {
+					if (type === "check-in" && times?.in === "----") {
 						const date = new Date();
 						const checkinTime = date.toLocaleTimeString("default", {
 							hour: "numeric",
@@ -98,7 +98,7 @@ const App = () => {
 						);
 					}
 
-					if (type === "check-out" && !times?.out && times?.in) {
+					if (type === "check-out" && times?.out === "----" && times?.in != "----") {
 						const date = new Date();
 						const checkoutTime = date.toLocaleTimeString("default", {
 							hour: "numeric",
