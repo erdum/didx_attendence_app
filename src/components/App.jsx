@@ -85,6 +85,7 @@ const App = () => {
 							month: "numeric",
 							year: "numeric",
 						});
+						setLoaders((prevState) => ({ ...prevState, checkin: true }));
 						attendenceSheet.addRow(
 							{
 								UID: user.uid,
@@ -95,7 +96,10 @@ const App = () => {
 								check_in_cordinates: `${data.lat}, ${data.long}`,
 								check_in_timestamp: Date.now(),
 							},
-							() => setTimes((prevState) => ({ ...prevState, in: checkinTime }))
+							() => {
+								setTimes((prevState) => ({ ...prevState, in: checkinTime }));
+								setLoaders((prevState) => ({ ...prevState, checkin: false }));
+							}
 						);
 					}
 
@@ -110,6 +114,7 @@ const App = () => {
 							month: "numeric",
 							year: "numeric",
 						});
+						setLoaders((prevState) => ({ ...prevState, checkout: true }));
 						attendenceSheet.updateRow(
 							{
 								check_out_at: checkoutTime,
@@ -118,8 +123,10 @@ const App = () => {
 							},
 							"UID",
 							user.uid,
-							() =>
-								setTimes((prevState) => ({ ...prevState, out: checkoutTime }))
+							() => {
+								setTimes((prevState) => ({ ...prevState, out: checkoutTime }));
+								setLoaders((prevState) => ({ ...prevState, checkout: false }));
+							}
 						);
 					}
 				} else {
