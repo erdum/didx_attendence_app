@@ -19,7 +19,6 @@ const App = () => {
 	const [times, setTimes] = useState({
 		in: null,
 		out: null,
-		inTimestamp: null,
 	});
 	const [loaders, setLoaders] = useState({
 		user: true,
@@ -53,7 +52,7 @@ const App = () => {
 						});
 					} else {
 						setLoaders({ checkin: false, checkout: false, user: false });
-						setTimes({ in: "----", out: "----", inTimestamp: null });
+						setTimes({ in: "----", out: "----" });
 					}
 				});
 			} else {
