@@ -49,7 +49,7 @@ const App = () => {
 						setLoaders({ checkin: false, checkout: false, user: false });
 						setTimes({
 							in: lastEntry.check_in_at,
-							out: lastEntry.check_out_at,
+							out: lastEntry?.check_out_at === "" ? "----" : lastEntry.check_out_at,
 						});
 					} else {
 						setLoaders({ checkin: false, checkout: false, user: false });
