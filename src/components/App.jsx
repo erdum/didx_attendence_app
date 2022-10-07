@@ -94,7 +94,7 @@ const App = () => {
 								check_in_cordinates: `${data.lat}, ${data.long}`,
 								check_in_timestamp: Date.now(),
 							},
-							() => setTimes((prevState) => ({ in: checkinTime }))
+							() => setTimes((prevState) => ({ ...prevState, in: checkinTime }))
 						);
 					}
 
