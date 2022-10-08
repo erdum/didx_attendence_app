@@ -10,6 +10,7 @@ const DateBar = () => {
 			px="4"
 			justifyContent="space-between"
 			alignItems="center"
+			mb="8"
 		>
 			<Text ml="2" color="blackAlpha.800" fontSize="lg" fontWeight="semibold">
 				{date.toLocaleString("default", { weekday: "short" })},{" "}

@@ -3,11 +3,11 @@ import { Flex, Text, SkeletonText } from "@chakra-ui/react";
 const DataBar = ({ checkinTime, checkoutTime, checkinLoader, checkoutLoader }) => {
 	return (
 		<>
+			{checkinTime != "----" && checkinTime ? <Text ml="6" mb="1" fontWeight="semibold">Location DIDX</Text> : null}
 			<Flex
 				w="100%"
 				h="10"
 				px="4"
-				mt="8"
 				justifyContent="space-between"
 				alignItems="center"
 			>
