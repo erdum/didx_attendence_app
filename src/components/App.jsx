@@ -92,7 +92,7 @@ const App = () => {
 				Email: email,
 				check_in_date: checkinDate,
 				check_in_at: checkinTime,
-				check_in_cordinates: `${data.lat}, ${data.long}`,
+				check_in_cordinates: `${lat}, ${long}`,
 				check_in_timestamp: Date.now(),
 			},
 			() => {
@@ -118,7 +118,7 @@ const App = () => {
 			{
 				check_out_at: checkoutTime,
 				check_out_date: checkoutDate,
-				check_out_cordinates: `${data.lat}, ${data.long}`,
+				check_out_cordinates: `${lat}, ${long}`,
 			},
 			"UID",
 			uid,
@@ -136,7 +136,7 @@ const App = () => {
 		}
 
 		const loc = GeoFence();
-		loc.setGeoFenceCircle(24.877639668696567, 67.07011875156365, 0.6);
+		loc.setGeoFenceCircle(24.877639668696567, 67.07011875156365, 10);
 		loc.getLocation(
 			(data) => {
 				if (loc.isUserInFence()) {
