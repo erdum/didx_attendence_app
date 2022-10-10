@@ -45,11 +45,17 @@ const App = () => {
 				setLoaders((prevState) => ({ ...prevState, user: false }));
 				attendenceSheet.getAllRows((rows) => {
 					const lastEntry = rows.filter((row) => row["UID"] == user.uid).at(-1);
-					if (lastEntry && (Date.now() - lastEntry.check_in_timestamp) < 82800000) {
+					if (
+						lastEntry &&
+						Date.now() - lastEntry.check_in_timestamp < 82800000
+					) {
 						setLoaders({ checkin: false, checkout: false, user: false });
 						setTimes({
 							in: lastEntry.check_in_at,
-							out: lastEntry?.check_out_at === "" ? "----" : lastEntry.check_out_at,
+							out:
+								lastEntry?.check_out_at === ""
+									? "----"
+									: lastEntry.check_out_at,
 						});
 					} else {
 						setLoaders({ checkin: false, checkout: false, user: false });
@@ -57,11 +63,71 @@ const App = () => {
 					}
 				});
 			} else {
-				setLoaders((prevState) => ({ checkin: false, checkout: false, user: false }));
+				setLoaders((prevState) => ({
+					checkin: false,
+					checkout: false,
+					user: false,
+				}));
 				setTimes({ in: "----", out: "----", inTimestamp: null });
 			}
 		});
 	}, []);
+
+	const checkIn = (uid, username, email, lat, long) => {
+		const date = new Date();
+		const checkinTime = date.toLocaleTimeString("default", {
+			hour: "numeric",
+			minute: "numeric",
+		});
+		const checkinDate = date.toLocaleString("default", {
+			day: "numeric",
+			month: "numeric",
+			year: "numeric",
+		});
+		setLoaders((prevState) => ({ ...prevState, checkin: true }));
+		attendenceSheet.addRow(
+			{
+				UID: uid,
+				Name: username,
+				Email: email,
+				check_in_date: checkinDate,
+				check_in_at: checkinTime,
+				check_in_cordinates: `${data.lat}, ${data.long}`,
+				check_in_timestamp: Date.now(),
+			},
+			() => {
+				setTimes((prevState) => ({ ...prevState, in: checkinTime }));
+				setLoaders((prevState) => ({ ...prevState, checkin: false }));
+			}
+		);
+	};
+
+	const checkOut = (uid, lat, long) => {
+		const date = new Date();
+		const checkoutTime = date.toLocaleTimeString("default", {
+			hour: "numeric",
+			minute: "numeric",
+		});
+		const checkoutDate = date.toLocaleString("default", {
+			day: "numeric",
+			month: "numeric",
+			year: "numeric",
+		});
+		setLoaders((prevState) => ({ ...prevState, checkout: true }));
+		attendenceSheet.updateRow(
+			{
+				check_out_at: checkoutTime,
+				check_out_date: checkoutDate,
+				check_out_cordinates: `${data.lat}, ${data.long}`,
+			},
+			"UID",
+			uid,
+			() => {
+				setTimes((prevState) => ({ ...prevState, out: checkoutTime }));
+				setLoaders((prevState) => ({ ...prevState, checkout: false }));
+			}
+		);
+	};
 
 	const handleFlow = async ({ type }) => {
 		if (!user) {
@@ -75,59 +141,17 @@ const App = () => {
 			(data) => {
 				if (loc.isUserInFence()) {
 					if (type === "check-in" && times?.in === "----") {
-						const date = new Date();
-						const checkinTime = date.toLocaleTimeString("default", {
-							hour: "numeric",
-							minute: "numeric",
-						});
-						const checkinDate = date.toLocaleString("default", {
-							day: "numeric",
-							month: "numeric",
-							year: "numeric",
-						});
-						setLoaders((prevState) => ({ ...prevState, checkin: true }));
-						attendenceSheet.addRow(
-							{
-								UID: user.uid,
-								Name: user.displayName,
-								Email: user.email,
-								check_in_date: checkinDate,
-								check_in_at: checkinTime,
-								check_in_cordinates: `${data.lat}, ${data.long}`,
-								check_in_timestamp: Date.now(),
-							},
-							() => {
-								setTimes((prevState) => ({ ...prevState, in: checkinTime }));
-								setLoaders((prevState) => ({ ...prevState, checkin: false }));
-							}
+						checkIn(
+							user.uid,
+							user.displayName,
+							user.email,
+							data.lat,
+							data.long
 						);
 					}
 
 					if (type === "check-out" && times?.in != "----") {
-						const date = new Date();
-						const checkoutTime = date.toLocaleTimeString("default", {
-							hour: "numeric",
-							minute: "numeric",
-						});
-						const checkoutDate = date.toLocaleString("default", {
-							day: "numeric",
-							month: "numeric",
-							year: "numeric",
-						});
-						setLoaders((prevState) => ({ ...prevState, checkout: true }));
-						attendenceSheet.updateRow(
-							{
-								check_out_at: checkoutTime,
-								check_out_date: checkoutDate,
-								check_out_cordinates: `${data.lat}, ${data.long}`,
-							},
-							"UID",
-							user.uid,
-							() => {
-								setTimes((prevState) => ({ ...prevState, out: checkoutTime }));
-								setLoaders((prevState) => ({ ...prevState, checkout: false }));
-							}
-						);
+						checkOut(user.uid, data.lat, data.long);
 					}
 				} else {
 					alert("You are not at the DIDX location!");
