@@ -75,13 +75,13 @@ const Sheet = () => {
 		let rows;
 		await getAllRows((data) => (rows = data));
 
-		const match = rows.find((elem) => {
+		const match = rows.filter((elem) => {
 			return (
 				elem &&
 				elem.hasOwnProperty(column) &&
 				Object.values(elem).includes(value)
 			);
-		});
+		}).at(-1);
 
 		callback && callback(match ?? null);
 	};
