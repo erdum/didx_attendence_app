@@ -14,6 +14,19 @@ import { autoSignIn, signIn } from "../utils/auth";
 import Sheet from "../utils/sheet";
 import GeoFence from "../utils/geoFence";
 
+const geoFenceCircles = [
+	{
+		name: "DIDX",
+		lat: 24.877639668696567,
+		long: 67.07011875156365,
+	},
+	{
+		name: "Incubator",
+		lat: 24.863309057361086,
+		long: 67.08572354841462,
+	},
+];
+
 const App = () => {
 	const [user, setUser] = useState(null);
 	const [times, setTimes] = useState({
@@ -136,7 +149,7 @@ const App = () => {
 		}
 
 		const loc = GeoFence();
-		loc.setGeoFenceCircle(24.877639668696567, 67.07011875156365, 0.6);
+		loc.setGeoFenceCircle(geoFenceCircles, 0.6);
 		loc.getLocation(
 			(data) => {
 				if (loc.isUserInFence()) {
