@@ -19,11 +19,13 @@ const geoFenceCircles = [
 		name: "DIDX",
 		lat: 24.877639668696567,
 		long: 67.07011875156365,
+		radius: 0.6,
 	},
 	{
 		name: "Incubator",
 		lat: 24.863309057361086,
 		long: 67.08572354841462,
+		radius: 0.6,
 	},
 ];
 
@@ -149,7 +151,7 @@ const App = () => {
 		}
 
 		const loc = GeoFence();
-		loc.setGeoFenceCircle(geoFenceCircles, 0.6);
+		loc.setGeoFenceCircle(geoFenceCircles);
 		loc.getLocation(
 			(data) => {
 				if (loc.isUserInFence()) {
