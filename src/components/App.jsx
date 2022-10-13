@@ -101,7 +101,6 @@ const App = () => {
 			month: "numeric",
 			year: "numeric",
 		});
-		setLoaders((prevState) => ({ ...prevState, checkin: true }));
 		attendenceSheet.addRow(
 			{
 				UID: uid,
@@ -131,7 +130,6 @@ const App = () => {
 			month: "numeric",
 			year: "numeric",
 		});
-		setLoaders((prevState) => ({ ...prevState, checkout: true }));
 		attendenceSheet.updateRow(
 			{
 				check_out_at: checkoutTime,
@@ -153,6 +151,9 @@ const App = () => {
 			signIn((user) => setUser(user));
 			return;
 		}
+
+		if (type === "check-in") setLoaders((prevState) => ({ ...prevState, checkin: true }));
+		if (type === "check-out") setLoaders((prevState) => ({ ...prevState, checkout: true }));
 
 		const loc = GeoFence();
 		loc.setGeoFenceCircle(geoFenceCircles);
@@ -179,7 +180,10 @@ const App = () => {
 					alert("You are not at the DIDX location!");
 				}
 			},
-			() => alert("Unable to get your location!")
+			() => {
+				setLoaders({ checkin: false, checkout: false, user: false });
+				alert("Unable to get your location!");
+			}
 		);
 	};
 
