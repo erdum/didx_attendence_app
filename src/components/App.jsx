@@ -152,8 +152,8 @@ const App = () => {
 			return;
 		}
 
-		if (type === "check-in") setLoaders((prevState) => ({ ...prevState, checkin: true }));
-		if (type === "check-out") setLoaders((prevState) => ({ ...prevState, checkout: true }));
+		if (type === "check-in" && times?.in === "----") setLoaders((prevState) => ({ ...prevState, checkin: true }));
+		if (type === "check-out" && times?.in != "----") setLoaders((prevState) => ({ ...prevState, checkout: true }));
 
 		const loc = GeoFence();
 		loc.setGeoFenceCircle(geoFenceCircles);
