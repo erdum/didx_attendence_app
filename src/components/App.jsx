@@ -40,6 +40,7 @@ const App = () => {
 		checkin: true,
 		checkout: true,
 	});
+	const [location, setLocation] = useState(null);
 	const theme = extendTheme({
 		fonts: {
 			heading: `Quicksand`,
@@ -72,6 +73,7 @@ const App = () => {
 									? "----"
 									: lastEntry.check_out_at,
 						});
+						setLocation(lastEntry.location);
 					} else {
 						setLoaders({ checkin: false, checkout: false, user: false });
 						setTimes({ in: "----", out: "----" });
@@ -88,7 +90,7 @@ const App = () => {
 		});
 	}, []);
 
-	const checkIn = (uid, username, email, lat, long) => {
+	const checkIn = (uid, username, email, lat, long, location) => {
 		const date = new Date();
 		const checkinTime = date.toLocaleTimeString("default", {
 			hour: "numeric",
@@ -109,6 +111,7 @@ const App = () => {
 				check_in_at: checkinTime,
 				check_in_cordinates: `${lat}, ${long}`,
 				check_in_timestamp: Date.now(),
+				location,
 			},
 			() => {
 				setTimes((prevState) => ({ ...prevState, in: checkinTime }));
@@ -117,7 +120,7 @@ const App = () => {
 		);
 	};
 
-	const checkOut = (uid, lat, long) => {
+	const checkOut = (uid, lat, long, location) => {
 		const date = new Date();
 		const checkoutTime = date.toLocaleTimeString("default", {
 			hour: "numeric",
@@ -134,6 +137,7 @@ const App = () => {
 				check_out_at: checkoutTime,
 				check_out_date: checkoutDate,
 				check_out_cordinates: `${lat}, ${long}`,
+				location,
 			},
 			"UID",
 			uid,
@@ -154,19 +158,22 @@ const App = () => {
 		loc.setGeoFenceCircle(geoFenceCircles);
 		loc.getLocation(
 			(data) => {
-				if (loc.isUserInFence()) {
+				const userLocation = loc.isUserInsideFence();
+				if (userLocation) {
 					if (type === "check-in" && times?.in === "----") {
 						checkIn(
 							user.uid,
 							user.displayName,
 							user.email,
 							data.lat,
-							data.long
+							data.long,
+							userLocation
 						);
+						setLocation(userLocation);
 					}
 
 					if (type === "check-out" && times?.in != "----") {
-						checkOut(user.uid, data.lat, data.long);
+						checkOut(user.uid, data.lat, data.long, userLocation);
 					}
 				} else {
 					alert("You are not at the DIDX location!");
@@ -207,6 +214,7 @@ const App = () => {
 				userLoader={loaders.user}
 				checkinLoader={loaders.checkin}
 				checkoutLoader={loaders.checkout}
+				location={location}
 			/>
 			<Flex
 				w="100%"
