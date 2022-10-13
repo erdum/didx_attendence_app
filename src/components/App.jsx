@@ -177,6 +177,7 @@ const App = () => {
 						checkOut(user.uid, data.lat, data.long, userLocation);
 					}
 				} else {
+					setLoaders({ checkin: false, checkout: false, user: false });
 					alert("You are not at the DIDX location!");
 				}
 			},
