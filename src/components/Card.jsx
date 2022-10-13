@@ -4,7 +4,7 @@ import UserBar from "./UserBar";
 import DateBar from "./DateBar";
 import DataBar from "./DataBar";
 
-const Card = ({ username, avatar, checkinTime, checkoutTime, flowHandler, userLoader, checkinLoader, checkoutLoader }) => {
+const Card = ({ username, avatar, checkinTime, checkoutTime, flowHandler, userLoader, checkinLoader, checkoutLoader, location }) => {
 	return (
 		<Box
 			w="92%"
@@ -25,7 +25,7 @@ const Card = ({ username, avatar, checkinTime, checkoutTime, flowHandler, userLo
 		>
 			<UserBar avatar={avatar} username={username} loader={userLoader} />
 			<DateBar />
-			<DataBar checkinTime={checkinTime} checkoutTime={checkoutTime} checkinLoader={checkinLoader} checkoutLoader={checkoutLoader} />
+			<DataBar checkinTime={checkinTime} checkoutTime={checkoutTime} checkinLoader={checkinLoader} checkoutLoader={checkoutLoader} location={location} />
 			<Flex mt="auto" alignItems="center" justifyContent="space-around" py="1">
 				<Button
 					isLoading={checkinLoader}

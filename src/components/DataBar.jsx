@@ -1,9 +1,9 @@
 import { Flex, Text, SkeletonText } from "@chakra-ui/react";
 
-const DataBar = ({ checkinTime, checkoutTime, checkinLoader, checkoutLoader }) => {
+const DataBar = ({ checkinTime, checkoutTime, checkinLoader, checkoutLoader, location }) => {
 	return (
 		<>
-			{checkinTime != "----" && checkinTime ? <Text ml="6" mb="1" fontWeight="semibold">Location DIDX</Text> : null}
+			{checkinTime != "----" && checkinTime ? <Text ml="6" mb="1" fontWeight="semibold">Location {location}</Text> : null}
 			<Flex
 				w="100%"
 				h="10"
