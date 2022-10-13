@@ -39,6 +39,7 @@ Create a google spread sheet and put these values in the first row
 - check_in_coordinates
 - check_out_coordinates
 - check_in_timestamp
+- location
 
 ## Configuration
 
