@@ -178,7 +178,7 @@ const App = () => {
 					}
 				} else {
 					setLoaders({ checkin: false, checkout: false, user: false });
-					alert("You are not at the DIDX location!");
+					alert("You are not at the office location!");
 				}
 			},
 			() => {
