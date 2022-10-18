@@ -1,10 +1,20 @@
-import { Box, Flex, Button } from "@chakra-ui/react";
+import { Box, Flex, Button, ScaleFade } from "@chakra-ui/react";
 import { CheckIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import UserBar from "./UserBar";
 import DateBar from "./DateBar";
 import DataBar from "./DataBar";
 
-const Card = ({ username, avatar, checkinTime, checkoutTime, flowHandler, userLoader, checkinLoader, checkoutLoader, location }) => {
+const Card = ({
+	username,
+	avatar,
+	checkinTime,
+	checkoutTime,
+	flowHandler,
+	userLoader,
+	checkinLoader,
+	checkoutLoader,
+	location,
+}) => {
 	return (
 		<Box
 			w="92%"
@@ -18,47 +28,70 @@ const Card = ({ username, avatar, checkinTime, checkoutTime, flowHandler, userLo
 			transform="translate(-50%, -50%)"
 			borderRadius="md"
 			bg="white"
-			display="flex"
-			alignItems="stretch"
-			flexDirection="column"
 			py="4"
 		>
-			<UserBar avatar={avatar} username={username} loader={userLoader} />
-			<DateBar />
-			<DataBar checkinTime={checkinTime} checkoutTime={checkoutTime} checkinLoader={checkinLoader} checkoutLoader={checkoutLoader} location={location} />
-			<Flex mt="auto" alignItems="center" justifyContent="space-around" py="1">
-				<Button
-					isLoading={checkinLoader}
-					onClick={() => flowHandler({ type: "check-in" })}
-					fontSize="sm"
-					bg="green.500"
-					color="white"
-					px="5"
-					_active={{
-						background: "green.500"
-					}}
-					_hover={{
-						background: "green.500"
-					}}
+			<ScaleFade
+				style={{
+					height: "100%",
+				}}
+				initialScale={0.8}
+				in
+			>
+				<Box
+					height="100%"
+					display="flex"
+					alignItems="stretch"
+					flexDirection="column"
 				>
-					Check In <CheckIcon ml="2" />
-				</Button>
-				<Button
-					isLoading={checkoutLoader}
-					onClick={() => flowHandler({ type: "check-out" })}
-					fontSize="sm"
-					bg="red.500"
-					color="white"
-					_active={{
-						background: "red.500"
-					}}
-					_hover={{
-						background: "red.500"
-					}}
-				>
-					Check out <ArrowForwardIcon ml="2" />
-				</Button>
-			</Flex>
+					<UserBar avatar={avatar} username={username} loader={userLoader} />
+					<DateBar />
+					<DataBar
+						checkinTime={checkinTime}
+						checkoutTime={checkoutTime}
+						checkinLoader={checkinLoader}
+						checkoutLoader={checkoutLoader}
+						location={location}
+					/>
+					<Flex
+						mt="auto"
+						alignItems="center"
+						justifyContent="space-around"
+						py="1"
+					>
+						<Button
+							isLoading={checkinLoader}
+							onClick={() => flowHandler({ type: "check-in" })}
+							fontSize="sm"
+							bg="green.500"
+							color="white"
+							px="5"
+							_active={{
+								background: "green.500",
+							}}
+							_hover={{
+								background: "green.500",
+							}}
+						>
+							Check In <CheckIcon ml="2" />
+						</Button>
+						<Button
+							isLoading={checkoutLoader}
+							onClick={() => flowHandler({ type: "check-out" })}
+							fontSize="sm"
+							bg="red.500"
+							color="white"
+							_active={{
+								background: "red.500",
+							}}
+							_hover={{
+								background: "red.500",
+							}}
+						>
+							Check out <ArrowForwardIcon ml="2" />
+						</Button>
+					</Flex>
+				</Box>
+			</ScaleFade>
 		</Box>
 	);
 };
