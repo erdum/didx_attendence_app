@@ -158,7 +158,7 @@ const App = () => {
 		const loc = GeoFence();
 		loc.setGeoFenceCircle(geoFenceCircles);
 		loc.getLocation(
-			(data) => {
+			({ lat, long }) => {
 				const userLocation = loc.isUserInsideFence();
 				if (userLocation) {
 					if (type === "check-in" && times?.in === "----") {
@@ -166,15 +166,15 @@ const App = () => {
 							user.uid,
 							user.displayName,
 							user.email,
-							data.lat,
-							data.long,
+							lat,
+							long,
 							userLocation
 						);
 						setLocation(userLocation);
 					}
 
 					if (type === "check-out" && times?.in != "----") {
-						checkOut(user.uid, data.lat, data.long, userLocation);
+						checkOut(user.uid, lat, long, userLocation);
 					}
 				} else {
 					setLoaders({ checkin: false, checkout: false, user: false });
