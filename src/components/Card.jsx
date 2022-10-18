@@ -40,6 +40,7 @@ const Card = ({
 					height: "100%",
 				}}
 				initialScale={0.8}
+				key={showList}
 				in
 			>
 				<Box
@@ -50,7 +51,7 @@ const Card = ({
 					overflowY="auto"
 				>
 					{showList ? (
-						<UserList />
+						<UsersList />
 					) : (
 						<>
 							<UserBar
@@ -66,6 +67,7 @@ const Card = ({
 								checkoutLoader={checkoutLoader}
 								location={location}
 							/>
+							<Button onClick={() => setShowList(true)} size="sm" w="30%" ml="6" mt="1">see others</Button>
 							<Flex
 								mt="auto"
 								alignItems="center"
