@@ -35,7 +35,8 @@ const ExtendedUserBar = ({ avatar, username, checkin, checkout }) => {
 	);
 };
 
-const UsersList = ({ users }) => {
+const UsersList = () => {
+	const users = [];
 	return (
 		<>
 			{users && users.length > 0 ? (
