@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { Box, Text } from "@chakra-ui/react";
 
 import UserBar from "./UserBar";
@@ -35,19 +37,34 @@ const ExtendedUserBar = ({ avatar, username, checkin, checkout }) => {
 	);
 };
 
+const Skeleton = () => {
+	return (
+		<Box display="flex" flexDirection="column">
+			<UserBar loader />
+			<UserBar loader />
+			<UserBar loader />
+			<UserBar loader />
+			<UserBar loader />
+			<UserBar loader />
+		</Box>
+	);
+};
+
 const UsersList = () => {
-	const users = [];
+	const [users, setUsers] = useState(null);
+
 	return (
 		<>
-			{users && users.length > 0 ? (
+			{users == null && <Skeleton />}
+			{users?.length > 0 &&
 				users.map((user) => (
 					<ExtendedUserBar
 						username="Syed M Erdum Adnan"
 						checkin="9:00 am"
 						checkout="----"
 					/>
-				))
-			) : (
+				))}
+			{users?.length === 0 && (
 				<Box
 					w="100%"
 					h="100%"
