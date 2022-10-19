@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Box, ScaleFade } from "@chakra-ui/react";
 import UsersList from "./UsersList";
@@ -6,6 +6,25 @@ import AttendancePanel from "./AttendancePanel";
 
 const Card = (props) => {
 	const [showList, setShowList] = useState(false);
+
+	useEffect(() => {
+		window.addEventListener("hashchange", hashObserver);
+		return () => window.removeEventListener("hashchange", hashObserver);
+	}, []);
+
+	useEffect(() => {
+		if (showList) {
+			window.location.hash = "list";
+			return;
+		}
+		
+		window.location.hash = "";
+	}, [showList]);
+
+	const hashObserver = ({ newURL }) => {
+		const value = window.location.hash.replace("#", "");
+		setShowList(value === "list");
+	};
 
 	return (
 		<Box
@@ -37,7 +56,11 @@ const Card = (props) => {
 					flexDirection="column"
 					overflowY="auto"
 				>
-					{showList ? <UsersList /> : <AttendancePanel {...props} showList={setShowList} />}
+					{showList ? (
+						<UsersList />
+					) : (
+						<AttendancePanel {...props} showList={setShowList} />
+					)}
 				</Box>
 			</ScaleFade>
 		</Box>
