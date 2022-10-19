@@ -90,7 +90,7 @@ const App = () => {
 		});
 	}, []);
 
-	const checkIn = (uid, username, email, lat, long, location) => {
+	const checkIn = (uid, username, email, lat, long, location, avatar) => {
 		const date = new Date();
 		const checkinTime = date.toLocaleTimeString("default", {
 			hour: "numeric",
@@ -111,6 +111,7 @@ const App = () => {
 				check_in_cordinates: `${lat}, ${long}`,
 				check_in_timestamp: Date.now(),
 				location,
+				avatar,
 			},
 			() => {
 				setTimes((prevState) => ({ ...prevState, in: checkinTime }));
@@ -168,7 +169,8 @@ const App = () => {
 							user.email,
 							lat,
 							long,
-							userLocation
+							userLocation,
+							user.photoURL
 						);
 						setLocation(userLocation);
 					}
