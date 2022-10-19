@@ -40,6 +40,7 @@ Create a google spread sheet and put these values in the first row
 - check_out_coordinates
 - check_in_timestamp
 - location
+- avatar
 
 ## Configuration
 
