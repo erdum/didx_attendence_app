@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, ScaleFade } from "@chakra-ui/react";
 
 import UserBar from "./UserBar";
+
+import Sheet from "../utils/sheet";
 
 const ExtendedUserBar = ({ avatar, username, checkin, checkout }) => {
 	return (
@@ -50,11 +52,37 @@ const Skeleton = () => {
 	);
 };
 
+const getTodayAttendance = (user) => {
+	const todayTime = new Date(user.check_in_date + " 00:00:00+0500").getTime();
+	const currentTime = new Date().getTime();
+	const diff = (((currentTime - todayTime) / 1000) / 60) / 60;
+	return diff < 24 && diff > 0;
+};
+
 const UsersList = () => {
 	const [users, setUsers] = useState(null);
 
+	const attendenceSheet = Sheet();
+	attendenceSheet.init({
+		apiKey: import.meta.env.VITE_GOOGLE_SHEET_API_KEY,
+		sheetId: import.meta.env.VITE_GOOGLE_SHEET_ID,
+		sheetName: "sheet1",
+	});
+
+	useEffect(() => {
+		attendenceSheet.getAllRows((rawData) => {
+			if (rawData.length === 0) {
+				setUsers([]);
+				return;
+			}
+
+			const data = rawData.filter(getTodayAttendance);
+			setUsers(data);
+		});
+	}, []);
+
 	return (
-		<>
+		<ScaleFade initialScale={0.8} key={users} in style={{ height: "100%", width: "100%" }}>
 			{users == null && <Skeleton />}
 			{users?.length > 0 &&
 				users.map((user) => (
@@ -85,7 +113,7 @@ const UsersList = () => {
 					</Text>
 				</Box>
 			)}
-		</>
+		</ScaleFade>
 	);
 };
 
