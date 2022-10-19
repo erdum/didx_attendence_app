@@ -14,7 +14,7 @@ const ExtendedUserBar = ({ avatar, username, checkin, checkout }) => {
 			bg="gray.100"
 			display="flex"
 			flexDirection="column"
-			alignItem="stretch"
+			alignItems="stretch"
 		>
 			<UserBar avatar={avatar} username={username} />
 			<Text
@@ -87,9 +87,11 @@ const UsersList = () => {
 			{users?.length > 0 &&
 				users.map((user) => (
 					<ExtendedUserBar
-						username="Syed M Erdum Adnan"
-						checkin="9:00 am"
-						checkout="----"
+						key={user.check_in_timestamp}
+						username={user.Name}
+						checkin={user.check_in_at}
+						checkout={user.check_out_at || "----"}
+						avatar={user.avatar}
 					/>
 				))}
 			{users?.length === 0 && (
