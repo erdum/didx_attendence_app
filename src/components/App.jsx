@@ -63,7 +63,7 @@ const App = () => {
 					const lastEntry = rows.filter((row) => row["UID"] == user.uid).at(-1);
 					if (
 						lastEntry &&
-						Date.now() - lastEntry.check_in_timestamp < 28800000
+						Date.now() - lastEntry.check_in_timestamp < 64800000
 					) {
 						setLoaders({ checkin: false, checkout: false, user: false });
 						setTimes({
