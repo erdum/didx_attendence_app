@@ -92,15 +92,17 @@ const App = () => {
 
 	const checkIn = (uid, username, email, lat, long, location, avatar) => {
 		const date = new Date();
-		const checkinTime = date.toLocaleTimeString("default", {
+		const checkinTimestamp = date.toISOString();
+		const checkinTime = date.toLocaleTimeString("en-US", {
 			hour: "numeric",
 			minute: "numeric",
 		});
-		const checkinDate = date.toLocaleString("default", {
-			day: "numeric",
-			month: "numeric",
+		const checkinDate = date.toLocaleString("en-US", {
 			year: "numeric",
+			month: "numeric",
+			day: "numeric",
 		});
+
 		attendenceSheet.addRow(
 			{
 				UID: uid,
@@ -108,8 +110,8 @@ const App = () => {
 				Email: email,
 				check_in_date: checkinDate,
 				check_in_at: checkinTime,
+				check_in_timestamp: checkinTimestamp,
 				check_in_cordinates: `${lat}, ${long}`,
-				check_in_timestamp: Date.now(),
 				location,
 				avatar,
 			},
@@ -122,15 +124,16 @@ const App = () => {
 
 	const checkOut = (uid, lat, long, location) => {
 		const date = new Date();
-		const checkoutTime = date.toLocaleTimeString("default", {
+		const checkoutDate = date.toLocaleString("en-US", {
+			year: "numeric",
+			month: "numeric",
+			day: "numeric",
+		});
+		const checkoutTime = date.toLocaleTimeString("en-US", {
 			hour: "numeric",
 			minute: "numeric",
 		});
-		const checkoutDate = date.toLocaleString("default", {
-			day: "numeric",
-			month: "numeric",
-			year: "numeric",
-		});
+
 		attendenceSheet.updateRow(
 			{
 				check_out_at: checkoutTime,
@@ -153,8 +156,10 @@ const App = () => {
 			return;
 		}
 
-		if (type === "check-in" && times?.in === "----") setLoaders((prevState) => ({ ...prevState, checkin: true }));
-		if (type === "check-out" && times?.in != "----") setLoaders((prevState) => ({ ...prevState, checkout: true }));
+		if (type === "check-in" && times?.in === "----")
+			setLoaders((prevState) => ({ ...prevState, checkin: true }));
+		if (type === "check-out" && times?.in != "----")
+			setLoaders((prevState) => ({ ...prevState, checkout: true }));
 
 		const loc = GeoFence();
 		loc.setGeoFenceCircle(geoFenceCircles);
