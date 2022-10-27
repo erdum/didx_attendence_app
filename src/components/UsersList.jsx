@@ -53,7 +53,7 @@ const Skeleton = () => {
 };
 
 const getTodayAttendance = (user) => {
-	const todayTime = new Date(user.check_in_date + " 00:00:00+0500").getTime();
+	const todayTime = new Date(user.check_in_date).getTime();
 	const currentTime = new Date().getTime();
 	const diff = (((currentTime - todayTime) / 1000) / 60) / 60;
 	return diff < 24 && diff > 0;
