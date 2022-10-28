@@ -56,38 +56,41 @@ const App = () => {
 
 	useEffect(() => {
 		autoSignIn((user) => {
-			if (user) {
-				setUser(user);
-				setLoaders((prevState) => ({ ...prevState, user: false }));
-				attendenceSheet.getAllRows((rows) => {
-					const lastEntry = rows.filter((row) => row["UID"] == user.uid).at(-1);
-					const lastTimestamp = new Date(lastEntry.check_in_timestamp).getTime();
-					if (
-						lastEntry &&
-						Date.now() - lastTimestamp < 64800000
-					) {
-						setLoaders({ checkin: false, checkout: false, user: false });
-						setTimes({
-							in: lastEntry.check_in_at,
-							out:
-								lastEntry?.check_out_at === ""
-									? "----"
-									: lastEntry.check_out_at,
-						});
-						setLocation(lastEntry.location);
-					} else {
-						setLoaders({ checkin: false, checkout: false, user: false });
-						setTimes({ in: "----", out: "----" });
-					}
-				});
-			} else {
+			if (!user) {
 				setLoaders((prevState) => ({
 					checkin: false,
 					checkout: false,
 					user: false,
 				}));
-				setTimes({ in: "----", out: "----", inTimestamp: null });
+				setTimes({ in: "----", out: "----" });
+				return;
 			}
+
+			setUser(user);
+			setLoaders((prevState) => ({ ...prevState, user: false }));
+			attendenceSheet.getAllRows((rows) => {
+				const lastEntry = rows.filter((row) => row["UID"] == user.uid).at(-1);
+
+				if (!lastEntry) {
+					setLoaders({ checkin: false, checkout: false, user: false });
+					setTimes({ in: "----", out: "----" });
+					return;
+				}
+
+				const lastTimestamp = new Date(lastEntry.check_in_timestamp).getTime();
+				if (Date.now() - lastTimestamp < 64800000) {
+					setLoaders({ checkin: false, checkout: false, user: false });
+					setTimes({
+						in: lastEntry.check_in_at,
+						out:
+							lastEntry?.check_out_at === "" ? "----" : lastEntry.check_out_at,
+					});
+					setLocation(lastEntry.location);
+				} else {
+					setLoaders({ checkin: false, checkout: false, user: false });
+					setTimes({ in: "----", out: "----" });
+				}
+			});
 		});
 	}, []);
 
