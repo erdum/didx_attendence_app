@@ -16,7 +16,7 @@ import GeoFence from "../utils/geoFence";
 
 const geoFenceCircles = [
 	{
-		name: "DIDX",
+		name: "DIDX/Chainak",
 		lat: 24.877639668696567,
 		long: 67.07011875156365,
 		radius: 0.6,
