@@ -210,7 +210,7 @@ const App = () => {
 				boxShadow="base"
 				px="4"
 			>
-				<Image src="/logo.png" objectFit="cover" />
+				<Image src="/logo.jpg" objectFit="cover" />
 				<Heading
 					as="h1"
 					size="md"
@@ -242,7 +242,7 @@ const App = () => {
 				px="4"
 			>
 				<Text alignSelf="center" fontSize="sm">
-					&#169; didx.net {new Date().getFullYear()}
+					&#169; supertec inc {new Date().getFullYear()}
 				</Text>
 			</Flex>
 		</ChakraProvider>
