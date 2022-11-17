@@ -23,17 +23,11 @@ const ExtendedUserBar = ({ avatar, username, checkin, checkout, location }) => {
 				px="5"
 				mt="2"
 				fontSize="sm"
+				display="flex"
+				justifyContent="space-between"
 			>
 				Checked in at {checkin}
-			</Text>
-			<Text
-				color="blackAlpha.800"
-				fontWeight="medium"
-				px="5"
-				mt="2"
-				fontSize="sm"
-			>
-				Checked out at {checkout}
+				<Text fontSize="xs">{location}</Text>
 			</Text>
 			<Text
 				color="blackAlpha.800"
@@ -42,7 +36,7 @@ const ExtendedUserBar = ({ avatar, username, checkin, checkout, location }) => {
 				my="2"
 				fontSize="sm"
 			>
-				location {location}
+				Checked out at {checkout}
 			</Text>
 		</Box>
 	);
