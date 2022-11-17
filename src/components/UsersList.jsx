@@ -6,7 +6,7 @@ import UserBar from "./UserBar";
 
 import Sheet from "../utils/sheet";
 
-const ExtendedUserBar = ({ avatar, username, checkin, checkout }) => {
+const ExtendedUserBar = ({ avatar, username, checkin, checkout, location }) => {
 	return (
 		<Box
 			w="100%"
@@ -30,10 +30,19 @@ const ExtendedUserBar = ({ avatar, username, checkin, checkout }) => {
 				color="blackAlpha.800"
 				fontWeight="medium"
 				px="5"
-				my="2"
+				mt="2"
 				fontSize="sm"
 			>
 				Checked out at {checkout}
+			</Text>
+			<Text
+				color="blackAlpha.800"
+				fontWeight="medium"
+				px="5"
+				my="2"
+				fontSize="sm"
+			>
+				location {location}
 			</Text>
 		</Box>
 	);
@@ -92,6 +101,7 @@ const UsersList = () => {
 						checkin={user.check_in_at}
 						checkout={user.check_out_at || "----"}
 						avatar={user.avatar}
+						location={user.location}
 					/>
 				))}
 			{users?.length === 0 && (
