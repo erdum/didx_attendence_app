@@ -1,5 +1,3 @@
-import GSheetReader from "g-sheets-api";
-
 const Sheet = () => {
 	const data = {};
 
