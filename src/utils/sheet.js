@@ -77,15 +77,17 @@ const Sheet = () => {
 
 		filterByColumn(payload, (rows) => {
 			const result = rows.at(-1);
+			console.log(result);
 			callback && callback(result ?? null);
 		});
 	};
 
 	const updateRow = async (body, column, value, callback) => {
-		let rowIndex;
-		await getRow(column, value, (data) => (rowIndex = data.rowIndex));
-		const result = await patchReq(body, data.url, rowIndex);
-		callback && callback(result);
+		getRow(column, value, async ({ rowIndex: id }) => {
+			// +2 offset for id beacuase spreadsheet counts from 1 and 1 row is occupied by the headers
+			const result = await patchReq(body, data.url, id + 2);
+			callback && callback(result ?? null);
+		});
 	};
 
 	const filterByColumn = (columns, callback) => {
