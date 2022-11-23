@@ -1,6 +1,5 @@
 import GSheetReader from "g-sheets-api";
 
-
 const Sheet = () => {
 	const data = {};
 
@@ -12,7 +11,7 @@ const Sheet = () => {
 
 	const getReq = async (url) => {
 		try {
-			const URL = url.searchParams.append("limit", 1000);
+			const URL = url.searchParams.append("limit", 100);
 			const req = await fetch(url, {
 				headers: {
 					Authorization: `Bearer ${data.apiKey}`,
