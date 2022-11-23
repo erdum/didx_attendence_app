@@ -7,6 +7,7 @@ const Sheet = () => {
 		data.apiKey = apiKey;
 		data.sheetId = sheetId;
 		data.sheetsonApiKey = sheetsonApiKey;
+		data.sheetName = sheetName;
 		data.url = new URL(`https://api.sheetson.com/v2/sheets/${sheetName}`);
 	};
 
@@ -70,26 +71,14 @@ const Sheet = () => {
 		callback && callback(result);
 	};
 
-	const getAllRows = async (callback) => {
-		const { results } = await getReq(data.url);
-		callback(results);
-	};
-
 	const getRow = async (column, value, callback) => {
-		let rows;
-		await getAllRows((data) => (rows = data));
+		const payload = {};
+		payload[column] = value;
 
-		const match = rows
-			.filter((elem) => {
-				return (
-					elem &&
-					elem.hasOwnProperty(column) &&
-					Object.values(elem).includes(value)
-				);
-			})
-			.at(-1);
-
-		callback && callback(match ?? null);
+		filterByColumn(payload, (rows) => {
+			const result = rows.at(-1);
+			callback && callback(result ?? null);
+		});
 	};
 
 	const updateRow = async (body, column, value, callback) => {
@@ -99,29 +88,34 @@ const Sheet = () => {
 		callback && callback(result);
 	};
 
-	const filterByColumn = () => {
+	const filterByColumn = (columns, callback) => {
 		const options = {
 			apiKey: data.apiKey,
 			sheetId: data.sheetId,
-			sheetName: "sheet1", // if sheetName is supplied, this will take precedence over sheetNumber
+			sheetName: data.sheetName,
 			returnAllResults: false,
-			filter: {
-				check_in_date: "11/23/2022",
-			},
+			filter: columns,
 			filterOptions: {
 				operator: "or",
 				matching: "loose",
 			},
 		};
-		GSheetReader(options, results => console.log(results), error => console.log(error));
+		GSheetReader(
+			options,
+			(results) => callback(results),
+			(error) => {
+				throw new Error(
+					`Error while fetching data with GSheetReader: ${error}`
+				);
+			}
+		);
 	};
 
 	return {
 		init,
 		addRow,
 		updateRow,
-		getAllRows,
-		filterByColumn,
+		getRow,
 	};
 };
 

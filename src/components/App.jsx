@@ -69,26 +69,40 @@ const App = () => {
 
 			setUser(user);
 			setLoaders((prevState) => ({ ...prevState, user: false }));
-			attendenceSheet.getAllRows((rows) => {
-				const lastEntry = rows.filter((row) => row["UID"] == user.uid).at(-1);
-
-				if (!lastEntry) {
-					setLoaders({ checkin: false, checkout: false, user: false });
+			attendenceSheet.getRow("UID", user.uid, (row) => {
+				if (!row) {
+					setLoaders({
+						checkin: false,
+						checkout: false,
+						user: false,
+					});
 					setTimes({ in: "----", out: "----" });
 					return;
 				}
 
-				const lastTimestamp = new Date(lastEntry.check_in_timestamp).getTime();
+				const lastTimestamp = new Date(
+					row.check_in_timestamp
+				).getTime();
 				if (Date.now() - lastTimestamp < 64800000) {
-					setLoaders({ checkin: false, checkout: false, user: false });
-					setTimes({
-						in: lastEntry.check_in_at,
-						out:
-							lastEntry?.check_out_at === "" ? "----" : lastEntry.check_out_at,
+					setLoaders({
+						checkin: false,
+						checkout: false,
+						user: false,
 					});
-					setLocation(lastEntry.location);
+					setTimes({
+						in: row.check_in_at,
+						out:
+							row?.check_out_at === ""
+								? "----"
+								: row.check_out_at,
+					});
+					setLocation(row.location);
 				} else {
-					setLoaders({ checkin: false, checkout: false, user: false });
+					setLoaders({
+						checkin: false,
+						checkout: false,
+						user: false,
+					});
 					setTimes({ in: "----", out: "----" });
 				}
 			});
@@ -189,7 +203,11 @@ const App = () => {
 						checkOut(user.uid, lat, long, userLocation);
 					}
 				} else {
-					setLoaders({ checkin: false, checkout: false, user: false });
+					setLoaders({
+						checkin: false,
+						checkout: false,
+						user: false,
+					});
 					alert("You are not at the office location!");
 				}
 			},
