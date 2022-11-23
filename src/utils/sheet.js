@@ -77,7 +77,6 @@ const Sheet = () => {
 
 		filterByColumn(payload, (rows) => {
 			const result = rows.at(-1);
-			console.log(result);
 			callback && callback(result ?? null);
 		});
 	};
