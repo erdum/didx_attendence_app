@@ -44,13 +44,15 @@ Create a google spread sheet and put these values in the first row
 
 ## Configuration
 
-1. Make google spreadsheet accessible by any one with the link and role as a editor
+1. Make a google cloud project and enable google sheets api in services section then generate a api key for environment variable
 
-2. Create account in [sheetson.com](https://sheetson.com) and copy api key for environment variable
+2. Make a google spreadsheet as described above and make it accessible by any one with the link and role as a editor
 
-3. Create a project in firebase and enable google auth provider in authentication section
+3. Create a account in [sheetson.com](https://sheetson.com) and copy api key for environment variable
 
-4. Add web app into your firebae project and copy api key and auth domain from config object
+4. Create a new project in firebase and enable google auth provider in the authentication section
+
+5. Click on add web app in your firebae project console and copy api key and auth domain from config object for environment variable
 
 ## Environment Variables
 
@@ -58,7 +60,9 @@ To run this project, you will need to add the following environment variables to
 
 `VITE_GOOGLE_SHEET_ID=your_google_spreadsheet_id_from_the_url`
 
-`VITE_GOOGLE_SHEET_API_KEY=api_key_from_sheetson.com`
+`VITE_GOOGLE_SHEET_API_KEY=api_key_from_google_cloud`
+
+`VITE_SHEETSON_API_KEY=api_key_from_sheetson.com`
 
 `VITE_FIREBASE_API_KEY=api_key_from_firebase_config`
 

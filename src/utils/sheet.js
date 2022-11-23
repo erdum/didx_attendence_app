@@ -1,9 +1,12 @@
+import GSheetReader from "g-sheets-api";
+
 const Sheet = () => {
 	const data = {};
 
-	const init = ({ apiKey, sheetId, sheetName }) => {
+	const init = ({ apiKey, sheetId, sheetName, sheetsonApiKey }) => {
 		data.apiKey = apiKey;
 		data.sheetId = sheetId;
+		data.sheetsonApiKey = sheetsonApiKey;
 		data.url = new URL(`https://api.sheetson.com/v2/sheets/${sheetName}`);
 	};
 
@@ -12,7 +15,7 @@ const Sheet = () => {
 			const URL = url.searchParams.append("limit", 100);
 			const req = await fetch(url, {
 				headers: {
-					Authorization: `Bearer ${data.apiKey}`,
+					Authorization: `Bearer ${data.sheetsonApiKey}`,
 					"X-Spreadsheet-Id": data.sheetId,
 				},
 			});
@@ -29,7 +32,7 @@ const Sheet = () => {
 			const req = await fetch(url, {
 				method: "POST",
 				headers: {
-					Authorization: `Bearer ${data.apiKey}`,
+					Authorization: `Bearer ${data.sheetsonApiKey}`,
 					"X-Spreadsheet-Id": data.sheetId,
 					"Content-Type": "application/json",
 				},
@@ -48,7 +51,7 @@ const Sheet = () => {
 			const req = await fetch(`${url}/${row}`, {
 				method: "PATCH",
 				headers: {
-					Authorization: `Bearer ${data.apiKey}`,
+					Authorization: `Bearer ${data.sheetsonApiKey}`,
 					"X-Spreadsheet-Id": data.sheetId,
 					"Content-Type": "application/json",
 				},
@@ -76,13 +79,15 @@ const Sheet = () => {
 		let rows;
 		await getAllRows((data) => (rows = data));
 
-		const match = rows.filter((elem) => {
-			return (
-				elem &&
-				elem.hasOwnProperty(column) &&
-				Object.values(elem).includes(value)
-			);
-		}).at(-1);
+		const match = rows
+			.filter((elem) => {
+				return (
+					elem &&
+					elem.hasOwnProperty(column) &&
+					Object.values(elem).includes(value)
+				);
+			})
+			.at(-1);
 
 		callback && callback(match ?? null);
 	};
@@ -94,26 +99,29 @@ const Sheet = () => {
 		callback && callback(result);
 	};
 
-	const getFilteredRows = async (fields, callback) => {
-		let rows;
-		await getAllRows((data) => (rows = data));
-
-		const matchRows = rows.filter((elem) => {
-			const keys = Object.keys(elem);
-			const matchedFields = keys.filter((key) => elem[key] == fields[key]);
-			return matchedFields.length == Object.keys(fields).length;
-		});
-
-		callback && callback(matchRows ?? null);
+	const filterByColumn = () => {
+		const options = {
+			apiKey: data.apiKey,
+			sheetId: data.sheetId,
+			sheetName: "sheet1", // if sheetName is supplied, this will take precedence over sheetNumber
+			returnAllResults: false,
+			filter: {
+				check_in_date: "11/23/2022",
+			},
+			filterOptions: {
+				operator: "or",
+				matching: "loose",
+			},
+		};
+		GSheetReader(options, results => console.log(results), error => console.log(error));
 	};
 
 	return {
 		init,
 		addRow,
-		getAllRows,
-		getRow,
 		updateRow,
-		getFilteredRows,
+		getAllRows,
+		filterByColumn,
 	};
 };
 

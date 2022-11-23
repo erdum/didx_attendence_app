@@ -52,6 +52,7 @@ const App = () => {
 		apiKey: import.meta.env.VITE_GOOGLE_SHEET_API_KEY,
 		sheetId: import.meta.env.VITE_GOOGLE_SHEET_ID,
 		sheetName: "sheet1",
+		sheetsonApiKey: import.meta.env.VITE_SHEETSON_API_KEY,
 	});
 
 	useEffect(() => {
