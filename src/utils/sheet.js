@@ -1,14 +1,18 @@
+import GSheetReader from "g-sheets-api";
+
+
 const Sheet = () => {
 	const data = {};
 
 	const init = ({ apiKey, sheetId, sheetName }) => {
 		data.apiKey = apiKey;
 		data.sheetId = sheetId;
-		data.url = `https://api.sheetson.com/v2/sheets/${sheetName}`;
+		data.url = new URL(`https://api.sheetson.com/v2/sheets/${sheetName}`);
 	};
 
 	const getReq = async (url) => {
 		try {
+			const URL = url.searchParams.append("limit", 1000);
 			const req = await fetch(url, {
 				headers: {
 					Authorization: `Bearer ${data.apiKey}`,
