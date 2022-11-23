@@ -27,7 +27,7 @@ const ExtendedUserBar = ({ avatar, username, checkin, checkout, location }) => {
 				justifyContent="space-between"
 			>
 				Checked in at {checkin}
-				<Text fontSize="xs">{location}</Text>
+				<Text fontSize="xs" as="span">{location}</Text>
 			</Text>
 			<Text
 				color="blackAlpha.800"
