@@ -118,6 +118,7 @@ const Sheet = () => {
 		addRow,
 		updateRow,
 		getRow,
+		filterByColumn,
 	};
 };
 

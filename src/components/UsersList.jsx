@@ -55,13 +55,6 @@ const Skeleton = () => {
 	);
 };
 
-const getTodayAttendance = (user) => {
-	const todayTime = new Date(user.check_in_date).getTime();
-	const currentTime = new Date().getTime();
-	const diff = (((currentTime - todayTime) / 1000) / 60) / 60;
-	return diff < 24 && diff > 0;
-};
-
 const UsersList = () => {
 	const [users, setUsers] = useState(null);
 
@@ -74,19 +67,19 @@ const UsersList = () => {
 	});
 
 	useEffect(() => {
-		attendenceSheet.getAllRows((rawData) => {
-			if (rawData.length === 0) {
-				setUsers([]);
-				return;
-			}
-
-			const data = rawData.filter(getTodayAttendance);
-			setUsers(data);
-		});
+		const todayDate = new Date().toLocaleDateString();
+		attendenceSheet.filterByColumn({ check_in_date: todayDate }, (rows) =>
+			setUsers(rows.length === 0 ? [] : rows)
+		);
 	}, []);
 
 	return (
-		<ScaleFade initialScale={0.8} key={users} in style={{ height: "100%", width: "100%" }}>
+		<ScaleFade
+			initialScale={0.8}
+			key={users}
+			in
+			style={{ height: "100%", width: "100%" }}
+		>
 			{users == null && <Skeleton />}
 			{users?.length > 0 &&
 				users.map((user) => (
