@@ -54,11 +54,17 @@ const Sheet = () => {
 		callback && callback(result ?? null);
 	};
 
+	const getUserTodayAttendance = async (uid, date) => {
+		const result = await getReq(`${data.url}/${date}/${uid}`);
+		callback && callback(result ?? null);
+	};
+
 	return {
 		init,
 		markAttendance,
 		markCheckout,
 		getTodayAttendance,
+		getUserTodayAttendance,
 	};
 };
 
