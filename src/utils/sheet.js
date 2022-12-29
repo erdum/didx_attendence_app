@@ -3,7 +3,7 @@ const Sheet = () => {
 
 	const init = ({ apiKey }) => {
 		data.apiKey = apiKey;
-		data.url = new URL("162.243.33.19/attendance");
+		data.url = "162.243.33.19/attendance";
 	};
 
 	const getReq = async (url) => {
