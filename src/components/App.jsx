@@ -49,10 +49,7 @@ const App = () => {
 	});
 	const attendenceSheet = Sheet();
 	attendenceSheet.init({
-		apiKey: import.meta.env.VITE_GOOGLE_SHEET_API_KEY,
-		sheetId: import.meta.env.VITE_GOOGLE_SHEET_ID,
-		sheetName: "sheet1",
-		sheetsonApiKey: import.meta.env.VITE_SHEETSON_API_KEY,
+		apiKey: import.meta.env.VITE_APIKEY,
 	});
 
 	useEffect(() => {
