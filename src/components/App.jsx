@@ -63,10 +63,13 @@ const App = () => {
 				setTimes({ in: "----", out: "----" });
 				return;
 			}
-
 			setUser(user);
 			setLoaders((prevState) => ({ ...prevState, user: false }));
-			attendenceSheet.getRow("UID", user.uid, (row) => {
+
+			const date = new Date();
+			const todayDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+
+			attendenceSheet.getTodayAttendance(user.uid, todayDate, (row) => {
 				if (!row) {
 					setLoaders({
 						checkin: false,
@@ -77,59 +80,34 @@ const App = () => {
 					return;
 				}
 
-				const lastTimestamp = new Date(
-					row.check_in_timestamp
-				).getTime();
-				if (Date.now() - lastTimestamp < 64800000) {
-					setLoaders({
-						checkin: false,
-						checkout: false,
-						user: false,
-					});
-					setTimes({
-						in: row.check_in_at,
-						out:
-							row?.check_out_at === ""
-								? "----"
-								: row.check_out_at,
-					});
-					setLocation(row.location);
-				} else {
-					setLoaders({
-						checkin: false,
-						checkout: false,
-						user: false,
-					});
-					setTimes({ in: "----", out: "----" });
-				}
+				setTimes({
+					in: row.check_in_at,
+					out: row?.check_out_at == null ? "----" : row.check_out_at,
+				});
+				setLocation(row.location);
+				setLoaders({
+					checkin: false,
+					checkout: false,
+					user: false,
+				});
 			});
 		});
 	}, []);
 
 	const checkIn = (uid, username, email, lat, long, location, avatar) => {
 		const date = new Date();
-		const checkinTimestamp = date.toISOString();
-		const checkinTime = date.toLocaleTimeString("en-US", {
-			hour: "numeric",
-			minute: "numeric",
-		});
-		const checkinDate = date.toLocaleString("en-US", {
-			year: "numeric",
-			month: "numeric",
-			day: "numeric",
-		});
+		const checkinDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+		const checkinTime = Math.round(date.now() / 1000);
 
-		attendenceSheet.addRow(
+		attendenceSheet.markAttendance(
 			{
-				UID: uid,
-				Name: username,
-				Email: email,
-				check_in_date: checkinDate,
-				check_in_at: checkinTime,
-				check_in_timestamp: checkinTimestamp,
-				check_in_cordinates: `${lat}, ${long}`,
+				uid,
+				name: username,
+				email,
+				date: checkinDate,
+				time: checkinTime,
+				coordinates: `${lat}, ${long}`,
 				location,
-				avatar,
 			},
 			() => {
 				setTimes((prevState) => ({ ...prevState, in: checkinTime }));
@@ -140,25 +118,16 @@ const App = () => {
 
 	const checkOut = (uid, lat, long, location) => {
 		const date = new Date();
-		const checkoutDate = date.toLocaleString("en-US", {
-			year: "numeric",
-			month: "numeric",
-			day: "numeric",
-		});
-		const checkoutTime = date.toLocaleTimeString("en-US", {
-			hour: "numeric",
-			minute: "numeric",
-		});
+		const checkoutDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+		const checkoutTime = Math.round(date.now() / 1000);
 
-		attendenceSheet.updateRow(
-			{
-				check_out_at: checkoutTime,
-				check_out_date: checkoutDate,
-				check_out_cordinates: `${lat}, ${long}`,
-				location,
-			},
-			"UID",
+		attendenceSheet.markCheckout(
 			uid,
+			{
+				date: checkoutDate,
+				time: checkoutTime,
+				coordinates: `${lat}, ${long}`,
+			},
 			() => {
 				setTimes((prevState) => ({ ...prevState, out: checkoutTime }));
 				setLoaders((prevState) => ({ ...prevState, checkout: false }));
@@ -181,32 +150,28 @@ const App = () => {
 		loc.setGeoFenceCircle(geoFenceCircles);
 		loc.getLocation(
 			({ lat, long }) => {
-				const userLocation = loc.isUserInsideFence();
-				if (userLocation) {
-					if (type === "check-in" && times?.in === "----") {
-						checkIn(
-							user.uid,
-							user.displayName,
-							user.email,
-							lat,
-							long,
-							userLocation,
-							user.photoURL
-						);
-						setLocation(userLocation);
-					}
-
-					if (type === "check-out" && times?.in != "----") {
-						checkOut(user.uid, lat, long, userLocation);
-					}
-				} else {
-					setLoaders({
-						checkin: false,
-						checkout: false,
-						user: false,
-					});
-					alert("You are not at the office location!");
+				const userLocation = loc.isUserInsideFence() ?? "";
+				if (type === "check-in" && times?.in === "----") {
+					checkIn(
+						user.uid,
+						user.displayName,
+						user.email,
+						lat,
+						long,
+						userLocation,
+						user.photoURL
+					);
+					setLocation(userLocation);
 				}
+
+				if (type === "check-out" && times?.in != "----") {
+					checkOut(user.uid, lat, long, userLocation);
+				}
+				setLoaders({
+					checkin: false,
+					checkout: false,
+					user: false,
+				});
 			},
 			() => {
 				setLoaders({ checkin: false, checkout: false, user: false });
