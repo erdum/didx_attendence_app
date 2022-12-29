@@ -69,7 +69,7 @@ const App = () => {
 			const date = new Date();
 			const todayDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
 
-			attendenceSheet.getTodayAttendance(user.uid, todayDate, (row) => {
+			attendenceSheet.getUserTodayAttendance(user.uid, todayDate, (row) => {
 				if (!row) {
 					setLoaders({
 						checkin: false,
