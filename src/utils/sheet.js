@@ -49,12 +49,12 @@ const Sheet = () => {
 		callback && callback(result ?? null);
 	};
 
-	const getTodayAttendance = async (date) => {
+	const getTodayAttendance = async (date, callback) => {
 		const result = await getReq(`${data.url}/today/${date}`);
 		callback && callback(result ?? null);
 	};
 
-	const getUserTodayAttendance = async (uid, date) => {
+	const getUserTodayAttendance = async (uid, date, callback) => {
 		const result = await getReq(`${data.url}/${date}/${uid}`);
 		callback && callback(result ?? null);
 	};
