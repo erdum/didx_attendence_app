@@ -1,5 +1,3 @@
-import GSheetReader from "g-sheets-api-erdum";
-
 const Sheet = () => {
 	const data = {};
 
