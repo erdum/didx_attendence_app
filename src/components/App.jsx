@@ -67,7 +67,7 @@ const App = () => {
 			setLoaders((prevState) => ({ ...prevState, user: false }));
 
 			const date = new Date();
-			const todayDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+			const todayDate = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
 
 			attendenceSheet.getUserTodayAttendance(user.uid, todayDate, (row) => {
 				if (!row) {
