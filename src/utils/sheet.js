@@ -15,7 +15,7 @@ const Sheet = () => {
 			});
 
 			const res = await req.json();
-			return res;
+			return res?.data ?? [];
 		} catch (err) {
 			console.log(err);
 		}
@@ -33,7 +33,7 @@ const Sheet = () => {
 			});
 
 			const res = await req.json();
-			return res;
+			return res?.data ?? null;
 		} catch (err) {
 			console.log(err);
 		}
@@ -41,22 +41,22 @@ const Sheet = () => {
 
 	const markAttendance = async (body, callback) => {
 		const result = await postReq(body, data.url);
-		callback && callback(result ?? null);
+		callback && callback(result);
 	};
 
 	const markCheckout = async (uid, body, callback) => {
 		const result = await postReq(body, `${data.url}/${uid}`);
-		callback && callback(result ?? null);
+		callback && callback(result);
 	};
 
 	const getTodayAttendance = async (date, callback) => {
 		const result = await getReq(`${data.url}/today/${date}`);
-		callback && callback(result ?? null);
+		callback && callback(result);
 	};
 
 	const getUserTodayAttendance = async (uid, date, callback) => {
 		const result = await getReq(`${data.url}/${date}/${uid}`);
-		callback && callback(result ?? null);
+		callback && callback(result);
 	};
 
 	return {
