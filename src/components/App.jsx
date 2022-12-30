@@ -70,7 +70,6 @@ const App = () => {
 			const todayDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
 
 			attendenceSheet.getUserTodayAttendance(user.uid, todayDate, (row) => {
-				console.log(row);
 				if (!row) {
 					setLoaders({
 						checkin: false,
@@ -120,7 +119,7 @@ const App = () => {
 	const checkOut = (uid, lat, long, location) => {
 		const date = new Date();
 		const checkoutDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
-		const checkoutTime = Math.round(date.now() / 1000);
+		const checkoutTime = Math.round(Date.now() / 1000);
 
 		attendenceSheet.markCheckout(
 			uid,
