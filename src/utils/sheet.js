@@ -15,7 +15,7 @@ const Sheet = () => {
 			});
 
 			const res = await req.json();
-			return res?.data ?? [];
+			return res?.data ?? null;
 		} catch (err) {
 			console.log(err);
 		}
