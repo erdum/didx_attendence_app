@@ -13,6 +13,7 @@ import Card from "./Card";
 import { autoSignIn, signIn } from "../utils/auth";
 import Sheet from "../utils/sheet";
 import GeoFence from "../utils/geoFence";
+import epochToLocale from "../utils/time";
 
 const geoFenceCircles = [
 	{
@@ -81,8 +82,8 @@ const App = () => {
 				}
 
 				setTimes({
-					in: row.check_in_time,
-					out: row?.check_out_time == null ? "----" : row.check_out_time,
+					in: epochToLocale(row.check_in_time),
+					out: row.check_out_time == null ? "----" : epochToLocale(row.check_out_time),
 				});
 				setLocation(row.location);
 				setLoaders({
@@ -110,7 +111,7 @@ const App = () => {
 				location,
 			},
 			() => {
-				setTimes((prevState) => ({ ...prevState, in: checkinTime }));
+				setTimes((prevState) => ({ ...prevState, in: epochToLocale(checkinTime) }));
 				setLoaders((prevState) => ({ ...prevState, checkin: false }));
 			}
 		);
@@ -129,7 +130,7 @@ const App = () => {
 				coordinates: `${lat}, ${long}`,
 			},
 			() => {
-				setTimes((prevState) => ({ ...prevState, out: checkoutTime }));
+				setTimes((prevState) => ({ ...prevState, out: epochToLocale(checkoutTime) }));
 				setLoaders((prevState) => ({ ...prevState, checkout: false }));
 			}
 		);
