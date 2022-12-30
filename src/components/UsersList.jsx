@@ -88,7 +88,7 @@ const UsersList = () => {
 						username={user.name}
 						checkin={epochToLocale(user.check_in_time)}
 						checkout={user.check_out_time ? epochToLocale(user.check_out_time) : "----"}
-						// avatar={user.avatar}
+						avatar={user.avatar}
 						location={user.location}
 					/>
 				))}

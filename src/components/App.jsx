@@ -109,6 +109,7 @@ const App = () => {
 				time: checkinTime,
 				coordinates: `${lat}, ${long}`,
 				location,
+				avatar,
 			},
 			() => {
 				setTimes((prevState) => ({ ...prevState, in: epochToLocale(checkinTime) }));
