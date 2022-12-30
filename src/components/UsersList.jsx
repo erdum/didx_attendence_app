@@ -60,9 +60,7 @@ const UsersList = () => {
 	const [users, setUsers] = useState(null);
 
 	const attendenceSheet = Sheet();
-	attendenceSheet.init({
-		apiKey: import.meta.env.VITE_APIKEY,
-	});
+	attendenceSheet.init();
 
 	useEffect(() => {
 		const date = new Date();

@@ -1,18 +1,13 @@
 const Sheet = () => {
 	const data = {};
 
-	const init = ({ apiKey }) => {
-		data.apiKey = apiKey;
+	const init = () => {
 		data.url = "http://162.243.33.19/attendance";
 	};
 
 	const getReq = async (url) => {
 		try {
-			const req = await fetch(url, {
-				headers: {
-					apikey: data.apiKey,
-				},
-			});
+			const req = await fetch(url);
 
 			const res = await req.json();
 			return res?.data ?? null;
@@ -26,7 +21,6 @@ const Sheet = () => {
 			const req = await fetch(url, {
 				method: "POST",
 				headers: {
-					apikey: data.apiKey,
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(body),

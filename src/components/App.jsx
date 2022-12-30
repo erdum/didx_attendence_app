@@ -49,9 +49,7 @@ const App = () => {
 		},
 	});
 	const attendenceSheet = Sheet();
-	attendenceSheet.init({
-		apiKey: import.meta.env.VITE_APIKEY,
-	});
+	attendenceSheet.init();
 
 	useEffect(() => {
 		autoSignIn((user) => {
