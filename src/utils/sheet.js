@@ -2,7 +2,7 @@ const Sheet = () => {
 	const data = {};
 
 	const init = () => {
-		data.url = "http://162.243.33.19/attendance";
+		data.url = "https://inapi.supertec.com/attendance";
 	};
 
 	const getReq = async (url) => {
