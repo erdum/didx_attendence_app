@@ -67,9 +67,10 @@ const App = () => {
 			setLoaders((prevState) => ({ ...prevState, user: false }));
 
 			const date = new Date();
-			const todayDate = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+			const todayDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
 
 			attendenceSheet.getUserTodayAttendance(user.uid, todayDate, (row) => {
+				console.log(row);
 				if (!row) {
 					setLoaders({
 						checkin: false,
@@ -81,8 +82,8 @@ const App = () => {
 				}
 
 				setTimes({
-					in: row.check_in_at,
-					out: row?.check_out_at == null ? "----" : row.check_out_at,
+					in: row.check_in_time,
+					out: row?.check_out_time == null ? "----" : row.check_out_time,
 				});
 				setLocation(row.location);
 				setLoaders({
@@ -96,8 +97,8 @@ const App = () => {
 
 	const checkIn = (uid, username, email, lat, long, location, avatar) => {
 		const date = new Date();
-		const checkinDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
-		const checkinTime = Math.round(date.now() / 1000);
+		const checkinDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+		const checkinTime = Math.round(Date.now() / 1000);
 
 		attendenceSheet.markAttendance(
 			{
@@ -118,7 +119,7 @@ const App = () => {
 
 	const checkOut = (uid, lat, long, location) => {
 		const date = new Date();
-		const checkoutDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+		const checkoutDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
 		const checkoutTime = Math.round(date.now() / 1000);
 
 		attendenceSheet.markCheckout(
