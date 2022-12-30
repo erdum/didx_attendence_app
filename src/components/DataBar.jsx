@@ -16,7 +16,10 @@ const DataBar = ({ checkinTime, checkoutTime, checkinLoader, checkoutLoader, loc
 				</Text>
 				{!checkinLoader ? (
 					<Text ml="2" color="blackAlpha.800" fontWeight="medium">
-						{checkinTime}
+						{new Date(checkinTime).toLocaleTimeString('en-US', {
+							hour: 'numeric',
+							minute: 'numeric'
+						})}
 					</Text>
 				) : (
 					<SkeletonText noOfLines={1} width="30%" />
@@ -34,7 +37,10 @@ const DataBar = ({ checkinTime, checkoutTime, checkinLoader, checkoutLoader, loc
 				</Text>
 				{!checkoutLoader ? (
 					<Text ml="2" color="blackAlpha.800" fontWeight="medium">
-						{checkoutTime}
+						{new Date(checkoutTime).toLocaleTimeString('en-US', {
+							hour: 'numeric',
+							minute: 'numeric'
+						})}
 					</Text>
 				) : (
 					<SkeletonText noOfLines={1} width="30%" />
