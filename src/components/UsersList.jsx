@@ -5,6 +5,7 @@ import { Box, Text, ScaleFade } from "@chakra-ui/react";
 import UserBar from "./UserBar";
 
 import Sheet from "../utils/sheet";
+import epochToLocale from "../utils/time";
 
 const ExtendedUserBar = ({ avatar, username, checkin, checkout, location }) => {
 	return (
@@ -60,16 +61,15 @@ const UsersList = () => {
 
 	const attendenceSheet = Sheet();
 	attendenceSheet.init({
-		apiKey: import.meta.env.VITE_GOOGLE_SHEET_API_KEY,
-		sheetId: import.meta.env.VITE_GOOGLE_SHEET_ID,
-		sheetName: "sheet1",
-		sheetsonApiKey: import.meta.env.VITE_SHEETSON_API_KEY,
+		apiKey: import.meta.env.VITE_APIKEY,
 	});
 
 	useEffect(() => {
-		const todayDate = new Date().toLocaleDateString();
-		attendenceSheet.filterByColumn({ check_in_date: todayDate }, (rows) =>
-			setUsers(rows.length === 0 ? [] : rows)
+		const date = new Date();
+		const today = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+
+		attendenceSheet.getTodayAttendance(today, (rows) =>
+			setUsers(rows)
 		);
 	}, []);
 
@@ -84,11 +84,11 @@ const UsersList = () => {
 			{users?.length > 0 &&
 				users.map((user) => (
 					<ExtendedUserBar
-						key={user.check_in_timestamp}
-						username={user.Name}
-						checkin={user.check_in_at}
-						checkout={user.check_out_at || "----"}
-						avatar={user.avatar}
+						key={user.check_in_time}
+						username={user.name}
+						checkin={epochToLocale(user.check_in_time)}
+						checkout={user.check_out_time ? epochToLocale(user.check_out_time) : "----"}
+						// avatar={user.avatar}
 						location={user.location}
 					/>
 				))}
