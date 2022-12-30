@@ -56,7 +56,7 @@ const Sheet = () => {
 
 	const getUserTodayAttendance = async (uid, date, callback) => {
 		const result = await getReq(`${data.url}/${date}/${uid}`);
-		callback && callback(result?.length > 0 ? result : null);
+		callback && callback(result?.length === 0 ? null : result);
 	};
 
 	return {
